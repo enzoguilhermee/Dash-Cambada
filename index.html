@@ -1515,6 +1515,7 @@ footer{
       <h2><span class="num">01</span>Ranking de Faturamento</h2>
       <div class="toggle" id="fatToggle">
         <button class="active" data-f="all">Todas</button>
+        <button data-f="AZUL">🔵 Azul</button>
         <button data-f="VERDE">🟢 Verde</button>
         <button data-f="AMARELO">🟡 Amarelo</button>
         <button data-f="VERMELHO">🔴 Vermelho</button>
@@ -2299,6 +2300,7 @@ function cs() {
 }
 
 const FAROL_COLOR = {
+  AZUL: 'var(--blue)',  
   VERDE: 'var(--green)',
   AMARELO: 'var(--amber)',
   VERMELHO: 'var(--red)',
@@ -2308,6 +2310,7 @@ const FAROL_COLOR = {
 };
 
 const FAROL_LBL = {
+  AZUL: '🔵 Azul',
   VERDE: '🟢 Verde',
   AMARELO: '🟡 Amarelo',
   VERMELHO: '🔴 Vermelho',
@@ -2317,6 +2320,7 @@ const FAROL_LBL = {
 };
 
 const FAROL_PILL = {
+  AZUL: 'blue',  
   VERDE: 'ok',
   AMARELO: 'warn',
   VERMELHO: 'bad',
