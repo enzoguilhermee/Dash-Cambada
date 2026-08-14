@@ -2437,8 +2437,8 @@ let charts = [];
 
 function buildHome() {
   const base23 = DATA.filter(d => d.categoria !== 'RECEM_FEDERADA');
-  const totFat = base23.reduce((s, d) => s + nn(d.fat), 0);
-  const totMeta = base23.reduce((s, d) => s + nn(d.metaFat), 0);
+  const totFat = DATA.reduce((s, d) => s + nn(d.fat), 0);
+  const totMeta = DATA.reduce((s, d) => s + nn(d.metaFat), 0);
   const totColab = base23.reduce((s, d) => s + nn(d.fatColab), 0);
   const verdes = base23.filter(d => d.farol === 'VERDE' || d.farol === 'AZUL').length;
   const zeradas = base23.filter(d => d.farol === 'ZERADA').length;
@@ -2450,7 +2450,7 @@ function buildHome() {
     },
     {
       v: brl(totFat),
-      l: 'Fat. total (excl. Excelência Jr.)',
+      l: 'Faturamento Total',
       cls: 'accent-gold'
     },
     {
@@ -2760,8 +2760,8 @@ function buildCluster() {
 // ─── DASH FEDERAÇÃO ───────────────────────────────────────────────────────
 function buildDash() {
   const base23d = DATA.filter(d => d.categoria !== 'RECEM_FEDERADA');
-  const totFat = base23d.reduce((s, d) => s + nn(d.fat), 0);
-  const totMeta = base23d.reduce((s, d) => s + nn(d.metaFat), 0);
+  const totFat = DATA.reduce((s, d) => s + nn(d.fat), 0);
+  const totMeta = DATA.reduce((s, d) => s + nn(d.metaFat), 0);
   const pctGeral = totFat / totMeta * 100;
   const verdes = base23d.filter(d => d.farol === 'VERDE' || d.farol === 'AZUL');
   const zeradas = base23d.filter(d => d.farol === 'ZERADA');
