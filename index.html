@@ -1451,17 +1451,29 @@ footer{
 
     <!-- SET 1 — frases originais -->
     <span class="ticker-item">OUÇA NOSSA VOZ, E PRESTE ATENÇÃO</span>
-    <span class="ticker-item">É A CAMBADA SERGIPANA QUE CHEGOU PRA IMPACTAR</span>
-    <span class="ticker-item">EJ FODA É NOSSA!</span>
+    <span class="ticker-item">CHEGOU A SERJÚNIOR, A MELHOR FEDERAÇÃO</span>
+    <span class="ticker-item">OUÇA-ME DIREITO PRA NÃO SE PASSAR</span>
+    <span class="ticker-item">É A CAMBADA SERGIPANA QUE CHEGOU PRA IMPACTAR!</span>
+    <span class="ticker-item">SER - JÚ - NIOR!</span>
     <span class="ticker-item">OHH CARANGUEJO, NÃO MANGUE DO MEU MANGUE</span>
-    <span class="ticker-item">É DA SERJÚNIOR QUE EU GOSTO</span>
+    <span class="ticker-item">É DA SERJÚNIOR QUE EU GOSTO, CARREGO NO CORAÇÃO</span>
+    <span class="ticker-item">DO MANGUE AO SERTÃO, EU FAÇO ESSE CABRUNCO CRESCER! </span>
+    <span class="ticker-item">EU BATO A META E NEM QUERO SABER</span>
+    <span class="ticker-item">A FEDERAÇÃO QUE CHEGOU PRA FERVER</span>
+    <span class="ticker-item">EJ FODA É NOSSA!</span>
 
-    <!-- SET 2 — cópia idêntica: garante o loop contínuo sem "salto" visual -->
+   <!-- SET 2 — cópia idêntica: garante o loop contínuo sem "salto" visual -->
     <span class="ticker-item">OUÇA NOSSA VOZ, E PRESTE ATENÇÃO</span>
-    <span class="ticker-item">É A CAMBADA SERGIPANA QUE CHEGOU PRA IMPACTAR</span>
-    <span class="ticker-item">EJ FODA É NOSSA!</span>
+    <span class="ticker-item">CHEGOU A SERJÚNIOR, A MELHOR FEDERAÇÃO</span>
+    <span class="ticker-item">OUÇA-ME DIREITO PRA NÃO SE PASSAR</span>
+    <span class="ticker-item">É A CAMBADA SERGIPANA QUE CHEGOU PRA IMPACTAR!</span>
+    <span class="ticker-item">SER - JÚ - NIOR!</span>
     <span class="ticker-item">OHH CARANGUEJO, NÃO MANGUE DO MEU MANGUE</span>
-    <span class="ticker-item">É DA SERJÚNIOR QUE EU GOSTO</span>
+    <span class="ticker-item">É DA SERJÚNIOR QUE EU GOSTO, CARREGO NO CORAÇÃO</span>
+    <span class="ticker-item">DO MANGUE AO SERTÃO, EU FAÇO ESSE CABRUNCO CRESCER!</span>
+    <span class="ticker-item">EU BATO A META E NEM QUERO SABER</span>
+    <span class="ticker-item">A FEDERAÇÃO QUE CHEGOU PRA FERVER</span>
+    <span class="ticker-item">EJ FODA É NOSSA!</span>
 
   </div>
 </div>
@@ -2484,7 +2496,7 @@ function buildHome() {
   // Top5 faturamento bruto
   const byFat = [...base23].sort((a, b) => nn(b.fat) - nn(a.fat)).slice(0, 5);
   const mxFat = byFat[0].fat;
-  document.getElementById('top5-fat').innerHTML = rankRows(byFat, d => d.fat, (d, v) => brl(v), () => mxFat, (d, v) => d.farol === 'VERDE' ? 'var(--green)' : d.farol === 'AMARELO' ? 'var(--amber)' : 'var(--red)');
+  document.getElementById('top5-fat').innerHTML = rankRows(byFat, d => d.fat, (d, v) => brl(v), () => mxFat, (d, v) => d.farol === 'AZUL' ? 'var(--blue)' : d.farol === 'VERDE' ? 'var(--green)' : d.farol === 'AMARELO' ? 'var(--amber)' : 'var(--red)');
 
   // Top5 % meta
   const byPct = [...base23].sort((a, b) => nn(b.pctFat) - nn(a.pctFat)).slice(0, 5);
