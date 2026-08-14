@@ -9,6 +9,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
 
+/* Paletas de cor e fontes globais (tema claro) — mude aqui para re-temear o site inteiro */
 :root{
   --bg:#f6f7fa;
   --bg-elev:#ffffff;
@@ -32,6 +33,7 @@
   font-family:'Inter',system-ui,sans-serif;
 }
 
+/* Sobrescreve as variáveis de cor quando o modo escuro está ativo */
 html[data-theme="dark"]{
   --blue:#4a9de0;
   --blue-bg:rgba(74,157,224,.15);
@@ -54,27 +56,25 @@ html[data-theme="dark"]{
   --teal-bg:rgba(46,196,170,.13);
 }
 
+/* Fundo com gradientes suaves específico do modo escuro */
 html[data-theme="dark"] body{
-  background:
-    radial-gradient(ellipse 900px 500px at 15% -10%,rgba(231, 150, 0, 0.07),transparent),
-    radial-gradient(ellipse 700px 500px at 100% 0%,rgba(46,196,170,.06),transparent),
-    var(--bg);
+  background: radial-gradient(ellipse 900px 500px at 15% -10%,rgba(231, 150, 0, 0.07),transparent), radial-gradient(ellipse 700px 500px at 100% 0%,rgba(46,196,170,.06),transparent), var(--bg);
 }
 
+/* Anima a troca de cores ao alternar claro/escuro em vez de trocar de forma abrupta */
 body,table,.kpi,.card,.alert-card,.rank-bar-fill,.pill,.toggle button,.theme-toggle button,.nav-item,.sidebar,.tab-btn{
-  transition:
-  background-color .25s ease,
-  color .25s ease,
-  border-color .25s ease;
+  transition: background-color .25s ease, color .25s ease, border-color .25s ease;
 }
 
-*{box-sizing:border-box;}
+/* Garante que padding e borda entrem no cálculo de largura/altura de todos os elementos */
+*{
+  box-sizing:border-box;
+}
+
+/* Fundo geral da página com gradientes decorativos e cor de texto padrão */
 body{
   margin:0;
-  background:
-    radial-gradient(ellipse 900px 500px at 15% -10%,rgba(185,129,44,.06),transparent),
-    radial-gradient(ellipse 700px 500px at 100% 0%,rgba(14,143,122,.05),transparent),
-    var(--bg);
+  background: radial-gradient(ellipse 900px 500px at 15% -10%,rgba(185,129,44,.06),transparent), radial-gradient(ellipse 700px 500px at 100% 0%,rgba(14,143,122,.05),transparent), var(--bg);
   color:var(--text);
   min-height:100vh;
   --blue:#1a6fb5;
@@ -82,12 +82,13 @@ body{
   font-family:'Inter',system-ui,sans-serif;
 }
 
-/* ── LAYOUT ── */
+/* Container principal: divide a tela em sidebar fixa + área de conteúdo */
 .layout{
   display:flex;
   min-height:100vh;
 }
 
+/* Barra lateral fixa com a navegação entre os painéis */
 .sidebar{
   width:236px;
   background:var(--bg-elev);
@@ -102,18 +103,21 @@ body{
   overflow:hidden;
 }
 
+/* Área rolável dentro da sidebar (para caber muitos itens de menu) */
 .sidebar-inner{
   flex:1;
   overflow-y:auto;
   padding:0 8px 16px;
 }
 
+/* Bloco do logotipo/título no topo da sidebar */
 .slogo{
   padding:20px 16px 16px;
   border-bottom:1px solid var(--line);
   margin-bottom:8px;
 }
 
+/* Texto pequeno acima do título (ex: "SERJÚNIOR · Dash da Cambada") */
 .slogo-eyebrow{
   font-family:'JetBrains Mono',monospace;
   font-size:10px;
@@ -123,6 +127,7 @@ body{
   margin-bottom:6px;
 }
 
+/* Título grande do dashboard na sidebar */
 .slogo-title{
   font-family:'Space Grotesk',sans-serif;
   font-weight:700;
@@ -130,6 +135,7 @@ body{
   color:var(--text);
 }
 
+/* Subtítulo pequeno abaixo do título (ex: mês/ano e total de EJs) */
 .slogo-sub{
   font-family:'JetBrains Mono',monospace;
   font-size:10px;
@@ -137,6 +143,7 @@ body{
   margin-top:3px;
 }
 
+/* Rótulo de seção dentro da sidebar (ex: "Painéis", "Filtrar por farol") */
 .sg-lbl{
   font-family:'JetBrains Mono',monospace;
   font-size:9px;
@@ -147,6 +154,7 @@ body{
   display:block;
 }
 
+/* Item de menu clicável da sidebar (cada painel do dashboard) */
 .nav-item{
   display:flex;
   align-items:center;
@@ -161,17 +169,20 @@ body{
   margin-bottom:2px;
 }
 
+/* Destaque visual ao passar o mouse sobre um item de menu */
 .nav-item:hover{
   background:var(--bg-elev-2);
   color:var(--text);
 }
 
+/* Estilo do item de menu que está selecionado no momento */
 .nav-item.active{
   background:var(--amber-bg);
   color:var(--amber);
   font-weight:600;
 }
 
+/* Tamanho e opacidade padrão do ícone dentro do item de menu */
 .nav-item svg{
   width:14px;
   height:14px;
@@ -179,10 +190,12 @@ body{
   opacity:.6;
 }
 
+/* Deixa o ícone com opacidade total quando o item está ativo */
 .nav-item.active svg{
   opacity:1;
 }
 
+/* Rodapé fixo da sidebar com a assinatura da SERJÚNIOR */
 .sfooter{
   padding:12px 16px;
   border-top:1px solid var(--line);
@@ -192,13 +205,14 @@ body{
   line-height:1.7;
 }
 
-/* ── MAIN ── */
+/* Área principal de conteúdo, deslocada para a direita da sidebar */
 .main{
   margin-left:236px;
   flex:1;
   min-height:100vh;
 }
 
+/* Barra superior fixa com título da página e alternância de tema */
 .topbar{
   background:var(--bg-elev);
   border-bottom:1px solid var(--line);
@@ -211,6 +225,7 @@ body{
   z-index:50;
 }
 
+/* Linha decorativa colorida (gradiente) no topo da topbar */
 .topbar::before{
   content:'';
   position:absolute;
@@ -218,11 +233,10 @@ body{
   left:0;
   right:0;
   height:2px;
-  background:linear-gradient(
-    90deg,var(--gold),var(--green),var(--teal)
-    );
+  background:linear-gradient( 90deg,var(--gold),var(--green),var(--teal) );
 }
 
+/* Texto pequeno acima do título na topbar */
 .tb-left .eyebrow{
   font-family:'JetBrains Mono',monospace;
   font-size:10px;
@@ -232,6 +246,7 @@ body{
   margin-bottom:4px;
 }
 
+/* Título do painel atual, exibido na topbar */
 .tb-left h1{
   font-family:'Space Grotesk',sans-serif;
   font-weight:700;
@@ -240,12 +255,14 @@ body{
   letter-spacing:-.01em;
 }
 
+/* Agrupa o botão de tema e o contador de EJs à direita da topbar */
 .tb-right{
   display:flex;
   align-items:center;
   gap:14px;
 }
 
+/* Cápsula que envolve os botões "Claro" / "Escuro" */
 .theme-toggle{
   display:inline-flex;
   align-items:center;
@@ -256,6 +273,7 @@ body{
   padding:3px;
 }
 
+/* Botão individual de alternância de tema */
 .theme-toggle button{
   display:flex;
   align-items:center;
@@ -270,21 +288,25 @@ body{
   cursor:pointer;
 }
 
+/* Tamanho do ícone (sol/lua) dentro do botão de tema */
 .theme-toggle button svg{
   width:12px;
   height:12px;
 }
 
+/* Estilo do botão de tema que está selecionado (fundo dourado) */
 .theme-toggle button.active{
   background:var(--gold);
   color:#fff;
   font-weight:600;
 }
 
+/* Ajusta a cor do texto do botão ativo para contraste no modo escuro */
 html[data-theme="dark"] .theme-toggle button.active{
   color:#1a1406;
 }
 
+/* Bloco de texto à direita da topbar com o total de EJs mapeadas */
 .tb-meta{
   text-align:right;
   font-family:'JetBrains Mono',monospace;
@@ -292,6 +314,7 @@ html[data-theme="dark"] .theme-toggle button.active{
   color:var(--text-dim);
 }
 
+/* Número em destaque dentro do bloco de metadados da topbar */
 .tb-meta b{
   font-family:'Space Grotesk',sans-serif;
   font-size:18px;
@@ -299,23 +322,31 @@ html[data-theme="dark"] .theme-toggle button.active{
   display:block;
 }
 
+/* Espaçamento interno da área de conteúdo (abaixo da topbar) */
+/* Espaçamento interno da área de conteúdo (abaixo da topbar); largura
+   máxima de 1920px para não esticar demais em monitores ultra-wide */
 .content{
   padding:24px 28px;
+  max-width:1920px;
+  margin:0 auto;
 }
 
+/* Cada "página"/painel do dashboard fica escondida por padrão */
 .view{
   display:none;
 }
 
+/* Mostra apenas o painel selecionado no momento */
 .view.active{
   display:block;
 }
 
-/* ── SECTION ── */
+/* Espaçamento entre blocos de conteúdo dentro de um painel */
 .section{
   margin-bottom:32px;
 }
 
+/* Cabeçalho de uma seção: título + eventuais botões de filtro */
 .section-head{
   display:flex;
   justify-content:space-between;
@@ -325,6 +356,7 @@ html[data-theme="dark"] .theme-toggle button.active{
   gap:10px;
 }
 
+/* Título de seção (ex: "Ranking de Faturamento") */
 .section-head h2{
   font-family:'Space Grotesk',sans-serif;
   font-size:17px;
@@ -335,6 +367,7 @@ html[data-theme="dark"] .theme-toggle button.active{
   gap:9px;
 }
 
+/* Numeração decorativa ao lado do título da seção (ex: "01") */
 .section-head h2 .num{
   font-family:'JetBrains Mono',monospace;
   color:var(--gold);
@@ -344,14 +377,14 @@ html[data-theme="dark"] .theme-toggle button.active{
   padding:1px 7px;
 }
 
+/* Texto explicativo pequeno abaixo do título da seção */
 .section-head .sub{
   color:var(--text-dim);
   font-size:12px;
   margin-top:3px;
 }
 
-
-/* ── CARDS ── */
+/* Cartão branco/escuro padrão usado em quase todos os blocos do dashboard */
 .card{
   background:var(--bg-elev);
   border:1px solid var(--line);
@@ -360,25 +393,28 @@ html[data-theme="dark"] .theme-toggle button.active{
   box-shadow:0 1px 3px rgba(22,31,46,.05);
 }
 
+/* Grade de 2 colunas iguais para organizar cartões lado a lado */
 .grid-2{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:14px;
 }
 
+/* Grade de 3 colunas iguais */
 .grid-3{
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:14px;
 }
 
+/* Grade de 4 colunas iguais */
 .grid-4{
   display:grid;
   grid-template-columns:repeat(4,1fr);
   gap:14px;
 }
 
-/* ── KPIs ── */
+/* Fileira de indicadores numéricos (KPIs) no topo dos painéis */
 .kpis{
   display:grid;
   grid-template-columns:repeat(6,1fr);
@@ -386,6 +422,7 @@ html[data-theme="dark"] .theme-toggle button.active{
   margin-bottom:26px;
 }
 
+/* Cartão individual de indicador numérico (ex: total de EJs, faturamento) */
 .kpi{
   background:var(--bg-elev);
   border:1px solid var(--line);
@@ -396,6 +433,7 @@ html[data-theme="dark"] .theme-toggle button.active{
   box-shadow:0 1px 2px rgba(22,31,46,.04);
 }
 
+/* Número grande em destaque dentro do cartão de KPI */
 .kpi .val{
   font-family:'Space Grotesk',sans-serif;
   font-weight:700;
@@ -403,6 +441,7 @@ html[data-theme="dark"] .theme-toggle button.active{
   line-height:1;
 }
 
+/* Texto explicativo pequeno abaixo do número do KPI */
 .kpi .lbl{
   font-size:11px;
   color:var(--text-dim);
@@ -410,13 +449,32 @@ html[data-theme="dark"] .theme-toggle button.active{
   line-height:1.35;
 }
 
-.kpi.accent-gold .val{color:var(--gold);}
-.kpi.accent-green .val{color:var(--green);}
-.kpi.accent-red .val{color:var(--red);}
-.kpi.accent-lav .val{color:var(--lavender);}
-.kpi.accent-teal .val{color:var(--teal);}
+/* Variante de cor dourada para o número do KPI */
+.kpi.accent-gold .val{
+  color:var(--gold);
+}
 
-/* ── TOGGLE ── */
+/* Variante de cor verde para o número do KPI */
+.kpi.accent-green .val{
+  color:var(--green);
+}
+
+/* Variante de cor vermelha para o número do KPI */
+.kpi.accent-red .val{
+  color:var(--red);
+}
+
+/* Variante de cor lavanda para o número do KPI */
+.kpi.accent-lav .val{
+  color:var(--lavender);
+}
+
+/* Variante de cor azul-petróleo para o número do KPI */
+.kpi.accent-teal .val{
+  color:var(--teal);
+}
+
+/* Cápsula de botões de alternância (ex: filtro por farol no Faturamento) */
 .toggle{
   display:inline-flex;
   background:var(--bg-elev-2);
@@ -425,6 +483,7 @@ html[data-theme="dark"] .theme-toggle button.active{
   padding:3px;
 }
 
+/* Botão individual dentro de um toggle/abas */
 .toggle button,.tab-btn{
   font-family:'JetBrains Mono',monospace;
   font-size:11.5px;
@@ -437,146 +496,889 @@ html[data-theme="dark"] .theme-toggle button.active{
   transition:.15s;
 }
 
+/* Estado do botão selecionado dentro do toggle/abas */
 .toggle button.active,.tab-btn.active{
   background:var(--gold);
   color:#fff;
   font-weight:600;
 }
 
-html[data-theme="dark"] .toggle button.active,html[data-theme="dark"] .tab-btn.active{color:#1a1406;}
+/* Ajusta contraste do texto do botão ativo no modo escuro */
+html[data-theme="dark"] .toggle button.active,html[data-theme="dark"] .tab-btn.active{
+  color:#1a1406;
+}
 
-/* ── RANK LIST ── */
-.rank-row{display:grid;grid-template-columns:24px 1fr 1fr 60px 46px;gap:10px;align-items:center;padding:7px 0;border-bottom:1px solid var(--line);font-size:12.5px;}
-.rank-row:last-child{border-bottom:none;}
-.rank-row .pos{color:var(--text-dim);font-family:'JetBrains Mono',monospace;font-size:11px;}
-.rank-row .rname{font-weight:600;font-family:'Space Grotesk',sans-serif;font-size:12px;}
-.rank-row .rsub{font-size:10px;color:var(--text-dim);margin-top:1px;}
-.rank-bar-bg{background:var(--bg-elev-2);border-radius:5px;height:14px;overflow:visible;position:relative;}
-.rank-bar-fill{height:100%;border-radius:5px 0 0 5px;position:relative;z-index:1;}
-.rank-bar-100{position:absolute;top:-2px;bottom:-2px;width:2px;background:var(--text);opacity:.25;z-index:2;}
-.rank-row .pct{font-family:'JetBrains Mono',monospace;text-align:right;font-size:12px;}
-.rank-row .gap-badge{font-family:'JetBrains Mono',monospace;font-size:11px;text-align:center;border-radius:5px;padding:3px 0;font-weight:600;}
+/* Uma linha de ranking (posição + nome + barra + valor), usada nos Top 5/6 */
+.rank-row{
+  display:grid;
+  grid-template-columns:24px 1fr 1fr 60px 46px;
+  gap:10px;
+  align-items:center;
+  padding:7px 0;
+  border-bottom:1px solid var(--line);
+  font-size:12.5px;
+}
 
-/* ── FAROL GRID ── */
-.farol-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:22px;}
-.farol-card{border-radius:12px;padding:15px;border:1px solid var(--line);background:var(--bg-elev);}
-.fc-azul{border-top:3px solid var(--blue);}
-.fc-verde{border-top:3px solid var(--green);}
-.fc-amarelo{border-top:3px solid var(--amber);}
-.fc-vermelho{border-top:3px solid var(--red);}
-.fc-zerada{border-top:3px solid var(--text-dim);}
-.fc-title{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:7px;}
-.fc-azul .fc-title{color:var(--blue);}
-.fc-verde .fc-title{color:var(--green);}
-.fc-amarelo .fc-title{color:var(--amber);}
-.fc-vermelho .fc-title{color:var(--red);}
-.fc-zerada .fc-title{color:var(--text-dim);}
-.fc-count{font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:700;line-height:1;margin-bottom:9px;}
-.fc-azul .fc-count{color:var(--blue);}
-.fc-verde .fc-count{color:var(--green);}
-.fc-amarelo .fc-count{color:var(--amber);}
-.fc-vermelho .fc-count{color:var(--red);}
-.fc-zerada .fc-count{color:var(--text-dim);}
-.fc-pills{display:flex;flex-wrap:wrap;gap:3px;}
-.fc-pill{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:600;padding:2px 7px;border-radius:20px;}
-.fc-azul .fc-pill{background:var(--blue-bg);color:var(--blue);}
-.fc-verde .fc-pill{background:var(--green-bg);color:var(--green);}
-.fc-amarelo .fc-pill{background:var(--amber-bg);color:var(--amber);}
-.fc-vermelho .fc-pill{background:var(--red-bg);color:var(--red);}
-.fc-zerada .fc-pill{background:var(--bg-elev-2);color:var(--text-dim);}
+/* Remove a linha divisória da última linha do ranking */
+.rank-row:last-child{
+  border-bottom:none;
+}
 
-/* ── TABLE ── */
-.table-scroll{overflow-x:auto;border-radius:10px;}
-table{width:100%;border-collapse:collapse;font-size:12.5px;}
-thead th{text-align:left;font-family:'JetBrains Mono',monospace;font-weight:500;font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:var(--text-dim);border-bottom:1px solid var(--line);padding:8px 10px;position:sticky;top:0;background:var(--bg-elev);cursor:pointer;user-select:none;white-space:nowrap;}
-thead th:hover{color:var(--gold);}
-tbody td{padding:8px 10px;border-bottom:1px solid var(--line);white-space:nowrap;}
-tbody tr:last-child td{border-bottom:none;}
-tbody tr:hover{background:var(--bg-elev-2);}
-tbody tr{cursor:pointer;}
-td.ej-name{font-family:'Space Grotesk',sans-serif;font-weight:600;}
+/* Número de posição no ranking (#1, #2...) */
+.rank-row .pos{
+  color:var(--text-dim);
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+}
 
-/* ── PILLS ── */
-.pill{border-radius:20px;padding:2px 9px;font-size:11px;font-family:'JetBrains Mono',monospace;font-weight:600;display:inline-block;}
-.pill.ok{background:var(--green-bg);color:var(--green);}
-.pill.warn{background:var(--amber-bg);color:var(--amber);}
-.pill.bad{background:var(--red-bg);color:var(--red);}
-.pill.teal{background:var(--teal-bg);color:var(--teal);}
-.pill.dim{background:var(--bg-elev-2);color:var(--text-dim);}
-.pill.blue{background:var(--blue-bg);color:var(--blue);}
+/* Nome da EJ dentro da linha de ranking */
+.rank-row .rname{
+  font-weight:600;
+  font-family:'Space Grotesk',sans-serif;
+  font-size:12px;
+}
 
-/* ── ALERT CARDS ── */
-.alert-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
-.alert-card{border-radius:12px;padding:16px 18px;border:1px solid var(--line);background:var(--bg-elev);border-left:3px solid var(--red);box-shadow:0 1px 3px rgba(22,31,46,.05);}
-.alert-card.mid{border-left-color:var(--amber);}
-.alert-card.info{border-left-color:var(--teal);}
-.alert-card.pos{border-left-color:var(--green);}
-.alert-card h3{margin:0 0 7px;font-family:'Space Grotesk',sans-serif;font-size:14px;display:flex;align-items:center;gap:7px;}
-.alert-card p{margin:0;font-size:12px;color:var(--text-dim);line-height:1.55;}
-.alert-card .tag{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--gold);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;display:block;}
+/* Ramo/subtítulo pequeno abaixo do nome na linha de ranking */
+.rank-row .rsub{
+  font-size:10px;
+  color:var(--text-dim);
+  margin-top:1px;
+}
 
-/* ── CLUSTER CARDS ── */
-.cl-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:22px;}
-.cl-card{background:var(--bg-elev);border:1px solid var(--line);border-radius:12px;padding:18px;}
-.cl-sobe{border-top:3px solid var(--green);}
-.cl-perm{border-top:3px solid var(--amber);}
-.cl-cai{border-top:3px solid var(--red);}
-.cl-title{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:5px;}
-.cl-sobe .cl-title{color:var(--green);}
-.cl-perm .cl-title{color:var(--amber);}
-.cl-cai .cl-title{color:var(--red);}
-.cl-count{font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:700;line-height:1;margin-bottom:12px;}
-.cl-sobe .cl-count{color:var(--green);}
-.cl-perm .cl-count{color:var(--amber);}
-.cl-cai .cl-count{color:var(--red);}
-.cl-ej-row{display:flex;align-items:center;justify-content:space-between;padding:5px 8px;border-radius:7px;margin-bottom:4px;font-size:11.5px;}
-.cl-sobe .cl-ej-row{background:var(--green-bg);}
-.cl-perm .cl-ej-row{background:var(--amber-bg);}
-.cl-cai .cl-ej-row{background:var(--red-bg);}
-.cl-ej-name{font-weight:600;font-family:'Space Grotesk',sans-serif;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11px;}
+/* Trilho cinza de fundo da barra de progresso do ranking */
+.rank-bar-bg{
+  background:var(--bg-elev-2);
+  border-radius:5px;
+  height:14px;
+  overflow:visible;
+  position:relative;
+}
 
-/* ── GAP LIST ── */
-.gap-item{display:flex;align-items:center;gap:9px;padding:7px 10px;border-radius:8px;margin-bottom:6px;font-size:12px;}
-.gap-item .gpos{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-dim);width:18px;text-align:center;flex-shrink:0;}
-.gap-item .gname{font-weight:600;font-family:'Space Grotesk',sans-serif;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11.5px;}
-.gap-item .gsub{font-size:10px;color:var(--text-dim);}
-.gap-item .gval{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;flex-shrink:0;}
-.gap-verde{background:var(--green-bg);}
-.gap-ama{background:var(--amber-bg);}
-.gap-red{background:var(--red-bg);}
+/* Barra colorida preenchida proporcional ao valor no ranking */
+.rank-bar-fill{
+  height:100%;
+  border-radius:5px 0 0 5px;
+  position:relative;
+  z-index:1;
+}
 
-/* ── ANIV TABLE ── */
-.aniv-tag{font-family:'JetBrains Mono',monospace;font-size:10px;background:var(--amber-bg);color:var(--amber);padding:2px 8px;border-radius:20px;display:inline-block;font-weight:600;}
+/* Marcador vertical indicando a marca de 100% na barra de ranking */
+.rank-bar-100{
+  position:absolute;
+  top:-2px;
+  bottom:-2px;
+  width:2px;
+  background:var(--text);
+  opacity:.25;
+  z-index:2;
+}
 
-/* ── TOP CARDS ── */
-.top10-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
-.t10-card{border:1px solid var(--gold-dim);border-radius:11px;padding:14px;background:linear-gradient(160deg,var(--gold-dim),var(--bg-elev-2) 60%);position:relative;display:flex;flex-direction:column;gap:7px;}
-.t10-badge{font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--gold);display:flex;align-items:center;gap:4px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;}
-.t10-name{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:13px;line-height:1.3;}
-.t10-sub{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-dim);}
-.t10-val{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--green);}
+/* Percentual/valor numérico à direita da linha de ranking */
+.rank-row .pct{
+  font-family:'JetBrains Mono',monospace;
+  text-align:right;
+  font-size:12px;
+}
 
-/* ── UPLOAD ── */
-.upload-zone{border:2px dashed var(--line);border-radius:12px;padding:32px;text-align:center;cursor:pointer;transition:border-color .2s,background .2s;margin-bottom:16px;}
-.upload-zone:hover,.upload-zone.drag{border-color:var(--teal);background:var(--teal-bg);}
-.upload-zone input[type=file]{display:none;}
-.search{background:var(--bg-elev-2);border:1px solid var(--line);border-radius:7px;color:var(--text);padding:7px 12px;font-family:'Inter',sans-serif;font-size:13px;width:200px;}
-.search:focus{outline:none;border-color:var(--gold-dim);}
+/* Selo colorido com o valor de GAP ao final da linha de ranking */
+.rank-row .gap-badge{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  text-align:center;
+  border-radius:5px;
+  padding:3px 0;
+  font-weight:600;
+}
 
-/* ── PANEL ── */
-.overlay{display:none;position:fixed;inset:0;background:rgba(13,20,32,.55);z-index:200;backdrop-filter:blur(4px);}
-.overlay.open{display:flex;align-items:center;justify-content:center;}
-.panel{background:var(--bg-elev);border:1px solid var(--line);border-radius:14px;width:520px;max-height:82vh;overflow-y:auto;box-shadow:0 24px 60px rgba(13,20,32,.3);}
-.panel-top{height:3px;border-radius:14px 14px 0 0;background:linear-gradient(90deg,var(--gold),var(--green),var(--teal));}
-.panel-hdr{padding:17px 20px 12px;border-bottom:1px solid var(--line);display:flex;align-items:flex-start;justify-content:space-between;}
-.panel-close{font-size:17px;cursor:pointer;color:var(--text-dim);border:none;background:none;}
-.panel-body{padding:16px 20px 22px;}
-.psec-title{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-dim);margin:14px 0 7px;}
-.pstat{background:var(--bg-elev-2);border:1px solid var(--line);border-radius:8px;padding:10px 12px;}
-.pstat-lbl{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text-dim);margin-bottom:3px;text-transform:uppercase;letter-spacing:.07em;}
-.pstat-val{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;}
+/* Grade de cartões do farol (distribuição de EJs por cor de status) */
+.farol-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+  margin-bottom:22px;
+}
 
-footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);color:var(--text-dim);font-size:11px;text-align:center;font-family:'JetBrains Mono',monospace;}
+/* Cartão individual de um farol (ex: "🟢 Verde") */
+.farol-card{
+  border-radius:12px;
+  padding:15px;
+  border:1px solid var(--line);
+  background:var(--bg-elev);
+}
+
+/* Borda superior azul do cartão de farol "Azul" (100%+ da meta) */
+.fc-azul{
+  border-top:3px solid var(--blue);
+}
+
+/* Borda superior verde do cartão de farol "Verde" */
+.fc-verde{
+  border-top:3px solid var(--green);
+}
+
+/* Borda superior amarela do cartão de farol "Amarelo" */
+.fc-amarelo{
+  border-top:3px solid var(--amber);
+}
+
+/* Borda superior vermelha do cartão de farol "Vermelho" */
+.fc-vermelho{
+  border-top:3px solid var(--red);
+}
+
+/* Borda superior cinza do cartão de farol "Zerada" */
+.fc-zerada{
+  border-top:3px solid var(--text-dim);
+}
+
+/* Rótulo do cartão de farol (ex: "🟢 VERDE") */
+.fc-title{
+  font-family:'JetBrains Mono',monospace;
+  font-size:9.5px;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  margin-bottom:7px;
+}
+
+/* Cor do rótulo no cartão de farol Azul */
+.fc-azul .fc-title{
+  color:var(--blue);
+}
+
+/* Cor do rótulo no cartão de farol Verde */
+.fc-verde .fc-title{
+  color:var(--green);
+}
+
+/* Cor do rótulo no cartão de farol Amarelo */
+.fc-amarelo .fc-title{
+  color:var(--amber);
+}
+
+/* Cor do rótulo no cartão de farol Vermelho */
+.fc-vermelho .fc-title{
+  color:var(--red);
+}
+
+/* Cor do rótulo no cartão de farol Zerada */
+.fc-zerada .fc-title{
+  color:var(--text-dim);
+}
+
+/* Número grande de quantas EJs estão naquele farol */
+.fc-count{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:26px;
+  font-weight:700;
+  line-height:1;
+  margin-bottom:9px;
+}
+
+/* Cor do número no cartão de farol Azul */
+.fc-azul .fc-count{
+  color:var(--blue);
+}
+
+/* Cor do número no cartão de farol Verde */
+.fc-verde .fc-count{
+  color:var(--green);
+}
+
+/* Cor do número no cartão de farol Amarelo */
+.fc-amarelo .fc-count{
+  color:var(--amber);
+}
+
+/* Cor do número no cartão de farol Vermelho */
+.fc-vermelho .fc-count{
+  color:var(--red);
+}
+
+/* Cor do número no cartão de farol Zerada */
+.fc-zerada .fc-count{
+  color:var(--text-dim);
+}
+
+/* Área com as etiquetas de nomes de EJs dentro do cartão de farol */
+.fc-pills{
+  display:flex;
+  flex-wrap:wrap;
+  gap:3px;
+}
+
+/* Etiqueta individual com o nome de uma EJ dentro do cartão de farol */
+.fc-pill{
+  font-family:'JetBrains Mono',monospace;
+  font-size:9px;
+  font-weight:600;
+  padding:2px 7px;
+  border-radius:20px;
+}
+
+/* Cor da etiqueta de EJ no cartão de farol Azul */
+.fc-azul .fc-pill{
+  background:var(--blue-bg);
+  color:var(--blue);
+}
+
+/* Cor da etiqueta de EJ no cartão de farol Verde */
+.fc-verde .fc-pill{
+  background:var(--green-bg);
+  color:var(--green);
+}
+
+/* Cor da etiqueta de EJ no cartão de farol Amarelo */
+.fc-amarelo .fc-pill{
+  background:var(--amber-bg);
+  color:var(--amber);
+}
+
+/* Cor da etiqueta de EJ no cartão de farol Vermelho */
+.fc-vermelho .fc-pill{
+  background:var(--red-bg);
+  color:var(--red);
+}
+
+/* Cor da etiqueta de EJ no cartão de farol Zerada */
+.fc-zerada .fc-pill{
+  background:var(--bg-elev-2);
+  color:var(--text-dim);
+}
+
+/* Permite rolagem horizontal quando a tabela é mais larga que a tela */
+.table-scroll{
+  overflow-x:auto;
+  border-radius:10px;
+}
+
+/* Estilo base de todas as tabelas do dashboard */
+table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:12.5px;
+}
+
+/* Cabeçalho de coluna da tabela (clicável para ordenar) */
+thead th{
+  text-align:left;
+  font-family:'JetBrains Mono',monospace;
+  font-weight:500;
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:.07em;
+  color:var(--text-dim);
+  border-bottom:1px solid var(--line);
+  padding:8px 10px;
+  position:sticky;
+  top:0;
+  background:var(--bg-elev);
+  cursor:pointer;
+  user-select:none;
+  white-space:nowrap;
+}
+
+/* Destaque ao passar o mouse sobre o cabeçalho de coluna */
+thead th:hover{
+  color:var(--gold);
+}
+
+/* Célula de dado dentro do corpo da tabela */
+tbody td{
+  padding:8px 10px;
+  border-bottom:1px solid var(--line);
+  white-space:nowrap;
+}
+
+/* Remove a linha divisória da última linha da tabela */
+tbody tr:last-child td{
+  border-bottom:none;
+}
+
+/* Destaque de fundo ao passar o mouse sobre uma linha da tabela */
+tbody tr:hover{
+  background:var(--bg-elev-2);
+}
+
+/* Cada linha da tabela é clicável (abre o painel de detalhes da EJ) */
+tbody tr{
+  cursor:pointer;
+}
+
+/* Estilo do nome da EJ dentro da tabela (mais destacado) */
+td.ej-name{
+  font-family:'Space Grotesk',sans-serif;
+  font-weight:600;
+}
+
+/* Etiqueta arredondada de status usada em várias telas (base) */
+.pill{
+  border-radius:20px;
+  padding:2px 9px;
+  font-size:11px;
+  font-family:'JetBrains Mono',monospace;
+  font-weight:600;
+  display:inline-block;
+}
+
+/* Variante verde da etiqueta (situação positiva) */
+.pill.ok{
+  background:var(--green-bg);
+  color:var(--green);
+}
+
+/* Variante amarela da etiqueta (situação de atenção) */
+.pill.warn{
+  background:var(--amber-bg);
+  color:var(--amber);
+}
+
+/* Variante vermelha da etiqueta (situação crítica) */
+.pill.bad{
+  background:var(--red-bg);
+  color:var(--red);
+}
+
+/* Variante azul-petróleo da etiqueta (ex: número do cluster) */
+.pill.teal{
+  background:var(--teal-bg);
+  color:var(--teal);
+}
+
+/* Variante neutra/cinza da etiqueta */
+.pill.dim{
+  background:var(--bg-elev-2);
+  color:var(--text-dim);
+}
+
+/* Variante azul da etiqueta */
+.pill.blue{
+  background:var(--blue-bg);
+  color:var(--blue);
+}
+
+/* Grade de cartões de alerta usada na "Leitura da Federação" */
+.alert-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+}
+
+/* Cartão de alerta/insight com borda colorida à esquerda */
+.alert-card{
+  border-radius:12px;
+  padding:16px 18px;
+  border:1px solid var(--line);
+  background:var(--bg-elev);
+  border-left:3px solid var(--red);
+  box-shadow:0 1px 3px rgba(22,31,46,.05);
+}
+
+/* Variante de alerta com borda amarela (atenção) */
+.alert-card.mid{
+  border-left-color:var(--amber);
+}
+
+/* Variante de alerta com borda azul-petróleo (informativo) */
+.alert-card.info{
+  border-left-color:var(--teal);
+}
+
+/* Variante de alerta com borda verde (destaque positivo) */
+.alert-card.pos{
+  border-left-color:var(--green);
+}
+
+/* Título dentro do cartão de alerta */
+.alert-card h3{
+  margin:0 0 7px;
+  font-family:'Space Grotesk',sans-serif;
+  font-size:14px;
+  display:flex;
+  align-items:center;
+  gap:7px;
+}
+
+/* Texto explicativo dentro do cartão de alerta */
+.alert-card p{
+  margin:0;
+  font-size:12px;
+  color:var(--text-dim);
+  line-height:1.55;
+}
+
+/* Rótulo pequeno acima do título do cartão de alerta */
+.alert-card .tag{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;
+  color:var(--gold);
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  margin-bottom:5px;
+  display:block;
+}
+
+/* Grade dos 3 cartões do "Farol de Cluster" (sobe / permanece / cai) */
+.cl-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+  margin-bottom:22px;
+}
+
+/* Cartão individual de movimento de cluster */
+.cl-card{
+  background:var(--bg-elev);
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:18px;
+}
+
+/* Estilo do cartão de EJs que estão subindo de cluster */
+.cl-sobe{
+  border-top:3px solid var(--green);
+}
+
+/* Estilo do cartão de EJs que estão permanecendo no cluster */
+.cl-perm{
+  border-top:3px solid var(--amber);
+}
+
+/* Estilo do cartão de EJs que estão caindo de cluster */
+.cl-cai{
+  border-top:3px solid var(--red);
+}
+
+/* Rótulo do cartão de movimento de cluster */
+.cl-title{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  margin-bottom:5px;
+}
+
+/* Cor do rótulo no cartão "Sobe" */
+.cl-sobe .cl-title{
+  color:var(--green);
+}
+
+/* Cor do rótulo no cartão "Permanece" */
+.cl-perm .cl-title{
+  color:var(--amber);
+}
+
+/* Cor do rótulo no cartão "Cai" */
+.cl-cai .cl-title{
+  color:var(--red);
+}
+
+/* Número grande de quantas EJs estão naquele movimento de cluster */
+.cl-count{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:28px;
+  font-weight:700;
+  line-height:1;
+  margin-bottom:12px;
+}
+
+/* Cor do número no cartão "Sobe" */
+.cl-sobe .cl-count{
+  color:var(--green);
+}
+
+/* Cor do número no cartão "Permanece" */
+.cl-perm .cl-count{
+  color:var(--amber);
+}
+
+/* Cor do número no cartão "Cai" */
+.cl-cai .cl-count{
+  color:var(--red);
+}
+
+/* Linha individual com o nome de uma EJ dentro do cartão de cluster */
+.cl-ej-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:5px 8px;
+  border-radius:7px;
+  margin-bottom:4px;
+  font-size:11.5px;
+}
+
+/* Fundo da linha de EJ dentro do cartão "Sobe" */
+.cl-sobe .cl-ej-row{
+  background:var(--green-bg);
+}
+
+/* Fundo da linha de EJ dentro do cartão "Permanece" */
+.cl-perm .cl-ej-row{
+  background:var(--amber-bg);
+}
+
+/* Fundo da linha de EJ dentro do cartão "Cai" */
+.cl-cai .cl-ej-row{
+  background:var(--red-bg);
+}
+
+/* Nome da EJ dentro da linha do cartão de cluster (corta texto longo) */
+.cl-ej-name{
+  font-weight:600;
+  font-family:'Space Grotesk',sans-serif;
+  flex:1;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  font-size:11px;
+}
+
+/* Linha individual da lista de GAPs (quanto falta para o verde) */
+.gap-item{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  padding:7px 10px;
+  border-radius:8px;
+  margin-bottom:6px;
+  font-size:12px;
+}
+
+/* Número de posição na lista de GAPs */
+.gap-item .gpos{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;
+  color:var(--text-dim);
+  width:18px;
+  text-align:center;
+  flex-shrink:0;
+}
+
+/* Nome da EJ dentro da lista de GAPs */
+.gap-item .gname{
+  font-weight:600;
+  font-family:'Space Grotesk',sans-serif;
+  flex:1;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  font-size:11.5px;
+}
+
+/* Ramo/subtítulo pequeno na lista de GAPs */
+.gap-item .gsub{
+  font-size:10px;
+  color:var(--text-dim);
+}
+
+/* Valor do GAP em destaque (quanto falta ou quanto passou da meta) */
+.gap-item .gval{
+  font-family:'JetBrains Mono',monospace;
+  font-size:12px;
+  font-weight:700;
+  flex-shrink:0;
+}
+
+/* Fundo verde quando a EJ já superou a meta (GAP negativo) */
+.gap-verde{
+  background:var(--green-bg);
+}
+
+/* Fundo amarelo quando o GAP é pequeno */
+.gap-ama{
+  background:var(--amber-bg);
+}
+
+/* Fundo vermelho quando o GAP ainda é grande */
+.gap-red{
+  background:var(--red-bg);
+}
+
+/* Etiqueta com a data de aniversário da EJ */
+.aniv-tag{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;
+  background:var(--amber-bg);
+  color:var(--amber);
+  padding:2px 8px;
+  border-radius:20px;
+  display:inline-block;
+  font-weight:600;
+}
+
+/* Grade de cartões de destaque (não usada atualmente, reservada para rankings em cartão) */
+.top10-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+}
+
+/* Cartão individual de destaque com fundo em gradiente dourado */
+.t10-card{
+  border:1px solid var(--gold-dim);
+  border-radius:11px;
+  padding:14px;
+  background:linear-gradient(160deg,var(--gold-dim),var(--bg-elev-2) 60%);
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+}
+
+/* Selo pequeno no topo do cartão de destaque */
+.t10-badge{
+  font-size:11px;
+  font-family:'JetBrains Mono',monospace;
+  color:var(--gold);
+  display:flex;
+  align-items:center;
+  gap:4px;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:.05em;
+}
+
+/* Nome em destaque dentro do cartão */
+.t10-name{
+  font-family:'Space Grotesk',sans-serif;
+  font-weight:700;
+  font-size:13px;
+  line-height:1.3;
+}
+
+/* Subtítulo pequeno dentro do cartão de destaque */
+.t10-sub{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;
+  color:var(--text-dim);
+}
+
+/* Valor numérico em destaque dentro do cartão */
+.t10-val{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  font-weight:700;
+  color:var(--green);
+}
+
+/* Área de arrastar-e-soltar para importar a planilha CSV/XLSX */
+.upload-zone{
+  border:2px dashed var(--line);
+  border-radius:12px;
+  padding:32px;
+  text-align:center;
+  cursor:pointer;
+  transition:border-color .2s,background .2s;
+  margin-bottom:16px;
+}
+
+/* Destaque visual quando o mouse passa ou um arquivo é arrastado por cima */
+.upload-zone:hover,.upload-zone.drag{
+  border-color:var(--teal);
+  background:var(--teal-bg);
+}
+
+/* Esconde o campo de arquivo nativo (o clique é feito na área inteira) */
+.upload-zone input[type=file]{
+  display:none;
+}
+
+/* Campo de busca/filtro (estilo reutilizável) */
+.search{
+  background:var(--bg-elev-2);
+  border:1px solid var(--line);
+  border-radius:7px;
+  color:var(--text);
+  padding:7px 12px;
+  font-family:'Inter',sans-serif;
+  font-size:13px;
+  width:200px;
+}
+
+/* Contorno dourado quando o campo de busca está em foco */
+.search:focus{
+  outline:none;
+  border-color:var(--gold-dim);
+}
+
+/* Fundo escurecido que cobre a tela quando um painel de detalhes abre */
+.overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(13,20,32,.55);
+  z-index:200;
+  backdrop-filter:blur(4px);
+}
+
+/* Torna o overlay visível e centraliza o painel */
+.overlay.open{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+/* Caixa branca/escura do painel de detalhes de uma EJ */
+.panel{
+  background:var(--bg-elev);
+  border:1px solid var(--line);
+  border-radius:14px;
+  width:520px;
+  max-height:82vh;
+  overflow-y:auto;
+  box-shadow:0 24px 60px rgba(13,20,32,.3);
+}
+
+/* Linha decorativa colorida no topo do painel de detalhes */
+.panel-top{
+  height:3px;
+  border-radius:14px 14px 0 0;
+  background:linear-gradient(90deg,var(--gold),var(--green),var(--teal));
+}
+
+/* Cabeçalho do painel de detalhes (nome da EJ + botão fechar) */
+.panel-hdr{
+  padding:17px 20px 12px;
+  border-bottom:1px solid var(--line);
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+}
+
+/* Botão "✕" para fechar o painel de detalhes */
+.panel-close{
+  font-size:17px;
+  cursor:pointer;
+  color:var(--text-dim);
+  border:none;
+  background:none;
+}
+
+/* Área com o conteúdo detalhado (estatísticas) da EJ selecionada */
+.panel-body{
+  padding:16px 20px 22px;
+}
+
+/* Título de subseção dentro do painel de detalhes (ex: "Faturamento") */
+.psec-title{
+  font-family:'JetBrains Mono',monospace;
+  font-size:9px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--text-dim);
+  margin:14px 0 7px;
+}
+
+/* Cartão pequeno com um único número dentro do painel de detalhes */
+.pstat{
+  background:var(--bg-elev-2);
+  border:1px solid var(--line);
+  border-radius:8px;
+  padding:10px 12px;
+}
+
+/* Rótulo pequeno acima do valor dentro do cartão de estatística */
+.pstat-lbl{
+  font-family:'JetBrains Mono',monospace;
+  font-size:9px;
+  color:var(--text-dim);
+  margin-bottom:3px;
+  text-transform:uppercase;
+  letter-spacing:.07em;
+}
+
+/* Valor numérico em destaque dentro do cartão de estatística */
+.pstat-val{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:18px;
+  font-weight:700;
+}
+
+/* Rodapé final da página, abaixo de todos os painéis */
+footer{
+  margin-top:40px;
+  padding-top:16px;
+  border-top:1px solid var(--line);
+  color:var(--text-dim);
+  font-size:11px;
+  text-align:center;
+  font-family:'JetBrains Mono',monospace;
+}
+
+/* ══════════════════════════════════════════════════
+   TICKER DE FRASES — Cambada Sergipana
+   Componente isolado: não depende de nenhuma outra
+   parte do dashboard para funcionar.
+   ══════════════════════════════════════════════════ */
+
+/* Faixa sticky que gruda logo abaixo da topbar ao rolar a página */
+/* Faixa sticky que gruda logo abaixo da topbar ao rolar a página;
+   largura máxima de 1920px e centralizada, para acompanhar o
+   mesmo limite aplicado ao restante do conteúdo */
+.ticker-wrap{
+  position: sticky;
+  top: 57px;
+  z-index: 49;
+  overflow: hidden;
+  background: var(--bg-elev);
+  border-bottom: 1px solid var(--line);
+  padding: 7px 0;
+  max-width: 1320px;
+  margin: 0 auto;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 7%, #000 93%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, #000 7%, #000 93%, transparent 100%);
+}
+
+/* Trilha que se move horizontalmente carregando as frases */
+.ticker-track{
+  display: flex;
+  width: max-content;
+  animation: ticker-move 32s linear infinite;
+}
+
+/* Pausa a animação quando o mouse passa por cima (acessibilidade) */
+.ticker-wrap:hover .ticker-track{
+  animation-play-state: paused;
+}
+
+/* Movimento contínuo: desloca 50% da trilha (o 2º set de frases é
+   idêntico ao 1º, criando um loop visual perfeito sem salto) */
+@keyframes ticker-move{
+  0%{
+    transform: translateX(0);
+  }
+  100%{
+    transform: translateX(-50%);
+  }
+}
+
+/* Frase individual dentro do ticker */
+.ticker-item{
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 36px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* Losango decorativo antes de cada frase, como separador */
+.ticker-item::before{
+  content: '◆';
+  font-size: 8px;
+  opacity: .45;
+}
+
+/* Alterna as cores da marca SERJÚNIOR (azul, amarelo, verde) a cada frase */
+.ticker-item:nth-child(5n+1){ color: var(--blue); }
+.ticker-item:nth-child(5n+2){ color: var(--amber); }
+.ticker-item:nth-child(5n+3){ color: var(--green); }
+.ticker-item:nth-child(5n+4){ color: var(--blue); }
+.ticker-item:nth-child(5n+5){ color: var(--amber); }
 </style>
 </head>
 <body>
@@ -634,6 +1436,33 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);color:v
     <div class="tb-meta">
       <b id="hm-total">24</b> EJs mapeadas · Agosto 2026
     </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     TICKER DE FRASES — Cambada Sergipana
+     Faixa que fica grudada (sticky) logo abaixo da
+     topbar e rola as frases da torcida em loop infinito.
+     aria-hidden porque é só decorativo, não precisa ser
+     lido por leitor de tela.
+     ══════════════════════════════════════════════════ -->
+<div class="ticker-wrap" aria-hidden="true">
+  <div class="ticker-track">
+
+    <!-- SET 1 — frases originais -->
+    <span class="ticker-item">OUÇA NOSSA VOZ, E PRESTE ATENÇÃO</span>
+    <span class="ticker-item">É A CAMBADA SERGIPANA QUE CHEGOU PRA IMPACTAR</span>
+    <span class="ticker-item">EJ FODA É NOSSA!</span>
+    <span class="ticker-item">OHH CARANGUEJO, NÃO MANGUE DO MEU MANGUE</span>
+    <span class="ticker-item">É DA SERJÚNIOR QUE EU GOSTO</span>
+
+    <!-- SET 2 — cópia idêntica: garante o loop contínuo sem "salto" visual -->
+    <span class="ticker-item">OUÇA NOSSA VOZ, E PRESTE ATENÇÃO</span>
+    <span class="ticker-item">É A CAMBADA SERGIPANA QUE CHEGOU PRA IMPACTAR</span>
+    <span class="ticker-item">EJ FODA É NOSSA!</span>
+    <span class="ticker-item">OHH CARANGUEJO, NÃO MANGUE DO MEU MANGUE</span>
+    <span class="ticker-item">É DA SERJÚNIOR QUE EU GOSTO</span>
+
   </div>
 </div>
 
@@ -843,6 +1672,7 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);color:v
 
 <script>
 // ─── DATA ─────────────────────────────────────────────────────────────────
+
 const DATA=[
 
 <!-- DASH AGROSERTÃO -->
@@ -1445,103 +2275,139 @@ const DATA=[
 "membros": 16}];
 
 // ─── HELPERS ──────────────────────────────────────────────────────────────
-const nn=v=>typeof v==='number'&&!isNaN(v)?v:0;
-const brl=v=>v>=1000000?'R$'+(v/1000000).toFixed(1)+'M':v>=1000?'R$'+Math.round(v/1000)+'k':`R$${v.toFixed(0)}`;
-const pctFmt=v=>v.toFixed(1).replace('.0','')+'%';
-const sn=n=>n.length>26?n.substring(0,24)+'…':n;
+const nn = v => typeof v === 'number' && !isNaN(v) ? v : 0;
+const brl = v => v >= 1000000 ? 'R$' + (v / 1000000).toFixed(1) + 'M' : v >= 1000 ? 'R$' + Math.round(v / 1000) + 'k' : `R$${v.toFixed(0)}`;
+const pctFmt = v => v.toFixed(1).replace('.0', '') + '%';
+const sn = n => n.length > 26 ? n.substring(0, 24) + '…' : n;
 
-function cs(){
-  const s=getComputedStyle(document.documentElement);
+function cs() {
+  const s = getComputedStyle(document.documentElement);
   return {
-    gold:s.getPropertyValue('--gold').trim(),
-    green:s.getPropertyValue('--green').trim(),
-    red:s.getPropertyValue('--red').trim(),
-    amber:s.getPropertyValue('--amber').trim(),
-    lavender:s.getPropertyValue('--lavender').trim(),
-    teal:s.getPropertyValue('--teal').trim(),
-    blue:s.getPropertyValue('--blue').trim(),
-    dim:s.getPropertyValue('--text-dim').trim(),
-    grid:s.getPropertyValue('--line').trim(),
-    elev:s.getPropertyValue('--bg-elev').trim(),
-    elev2:s.getPropertyValue('--bg-elev-2').trim(),
-    text:s.getPropertyValue('--text').trim(),
+    gold: s.getPropertyValue('--gold').trim(),
+    green: s.getPropertyValue('--green').trim(),
+    red: s.getPropertyValue('--red').trim(),
+    amber: s.getPropertyValue('--amber').trim(),
+    lavender: s.getPropertyValue('--lavender').trim(),
+    teal: s.getPropertyValue('--teal').trim(),
+    blue: s.getPropertyValue('--blue').trim(),
+    dim: s.getPropertyValue('--text-dim').trim(),
+    grid: s.getPropertyValue('--line').trim(),
+    elev: s.getPropertyValue('--bg-elev').trim(),
+    elev2: s.getPropertyValue('--bg-elev-2').trim(),
+    text: s.getPropertyValue('--text').trim(),
   };
 }
 
-const FAROL_COLOR={
-  VERDE:'var(--green)',
-  AMARELO:'var(--amber)',
-  VERMELHO:'var(--red)',
-  ZERADA:'var(--text-dim)',
-  SEM_COLAB:'var(--text-dim)',
-  SEM_DADOS:'var(--text-dim)'};
+const FAROL_COLOR = {
+  VERDE: 'var(--green)',
+  AMARELO: 'var(--amber)',
+  VERMELHO: 'var(--red)',
+  ZERADA: 'var(--text-dim)',
+  SEM_COLAB: 'var(--text-dim)',
+  SEM_DADOS: 'var(--text-dim)'
+};
 
-const FAROL_LBL={
-  VERDE:'🟢 Verde',
-  AMARELO:'🟡 Amarelo',
-  VERMELHO:'🔴 Vermelho',
-  ZERADA:'⚪ Zerada',
-  SEM_COLAB:'— Sem colab.',
-  SEM_DADOS:'— Em processo'};
+const FAROL_LBL = {
+  VERDE: '🟢 Verde',
+  AMARELO: '🟡 Amarelo',
+  VERMELHO: '🔴 Vermelho',
+  ZERADA: '⚪ Zerada',
+  SEM_COLAB: '— Sem colab.',
+  SEM_DADOS: '— Em processo'
+};
 
-const FAROL_PILL={
-  VERDE:'ok',
-  AMARELO:'warn',
-  VERMELHO:'bad',
-  ZERADA:'dim',
-  SEM_COLAB:'dim',
-  SEM_DADOS:'dim'};
-  
-const SIT_PILL={SOBE:'ok',PERMANECE:'warn',CAI:'bad'};
-const SIT_LBL={SOBE:'📈 Sobe',PERMANECE:'➡️ Permanece',CAI:'📉 Cai'};
-const VIEW_TITLES={home:'Visão Geral',fat:'Ranking de Faturamento',colab:'Faturamento Colaborativo',engaj:'Engajamento, CSAT & Permanência',cluster:'Farol de Cluster',dash:'Leitura da Federação — Agosto 2026',gaps:'GAPs de Agosto',aniv:'Aniversários & História',upload:'Atualizar Dados'};
+const FAROL_PILL = {
+  VERDE: 'ok',
+  AMARELO: 'warn',
+  VERMELHO: 'bad',
+  ZERADA: 'dim',
+  SEM_COLAB: 'dim',
+  SEM_DADOS: 'dim'
+};
+
+const SIT_PILL = {
+  SOBE: 'ok',
+  PERMANECE: 'warn',
+  CAI: 'bad'
+};
+const SIT_LBL = {
+  SOBE: '📈 Sobe',
+  PERMANECE: '➡️ Permanece',
+  CAI: '📉 Cai'
+};
+const VIEW_TITLES = {
+  home: 'Visão Geral',
+  fat: 'Ranking de Faturamento',
+  colab: 'Faturamento Colaborativo',
+  engaj: 'Engajamento, CSAT & Permanência',
+  cluster: 'Farol de Cluster',
+  dash: 'Leitura da Federação — Agosto 2026',
+  gaps: 'GAPs de Agosto',
+  aniv: 'Aniversários & História',
+  upload: 'Atualizar Dados'
+};
 
 // ─── VIEW SWITCH ─────────────────────────────────────────────────────────
-function sv(id,el){
-  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
-  document.getElementById('view-'+id).classList.add('active');
-  document.getElementById('view-title').textContent=VIEW_TITLES[id]||id;
-  if(el) el.classList.add('active');
+function sv(id, el) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('view-' + id).classList.add('active');
+  document.getElementById('view-title').textContent = VIEW_TITLES[id] || id;
+  if (el) el.classList.add('active');
 }
-function goFarol(f){
-  fatFilter=f;
+
+function goFarol(f) {
+  fatFilter = f;
   buildFatTable();
-  sv('fat',null);
+  sv('fat', null);
   // highlight nav
-  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   document.querySelectorAll('.nav-item')[1].classList.add('active');
   // highlight toggle
-  document.querySelectorAll('#fatToggle button').forEach(b=>{b.classList.remove('active');if(b.dataset.f===f)b.classList.add('active');});
+  document.querySelectorAll('#fatToggle button').forEach(b => {
+    b.classList.remove('active');
+    if (b.dataset.f === f) b.classList.add('active');
+  });
 }
 
 // ─── FAROL GRID ──────────────────────────────────────────────────────────
-function buildFarolGrid(id,field='farol'){
-  const isMain = field==='farol';
-  const g={AZUL:[],RECEM:[],VERDE:[],AMARELO:[],VERMELHO:[],ZERADA:[]};
-  DATA.forEach(d=>{
-    if(isMain && d.categoria==='RECEM_FEDERADA'){g.RECEM.push(d.nome);return;}
-    const raw=d[field];
-    const f=raw==='SEM_COLAB'||raw==='SEM_DADOS'?'ZERADA':raw;
-    if(g[f]!==undefined) g[f].push(d.nome);
+function buildFarolGrid(id, field = 'farol') {
+  const isMain = field === 'farol';
+  const g = {
+    AZUL: [],
+    RECEM: [],
+    VERDE: [],
+    AMARELO: [],
+    VERMELHO: [],
+    ZERADA: []
+  };
+  DATA.forEach(d => {
+    if (isMain && d.categoria === 'RECEM_FEDERADA') {
+      g.RECEM.push(d.nome);
+      return;
+    }
+    const raw = d[field];
+    const f = raw === 'SEM_COLAB' || raw === 'SEM_DADOS' ? 'ZERADA' : raw;
+    if (g[f] !== undefined) g[f].push(d.nome);
     else g.ZERADA.push(d.nome);
   });
-  const el=document.getElementById(id);if(!el)return;
-  const rows=isMain?[
-    ['fc-azul','🔵 Azul (100%+)',g.AZUL],
-    ['fc-verde','🟢 Verde',g.VERDE],
-    ['fc-amarelo','🟡 Amarelo',g.AMARELO],
-    ['fc-vermelho','🔴 Vermelho',g.VERMELHO],
-    ['fc-zerada','⚪ Zerada',g.ZERADA],
-    ['fc-azul','⭐ Recém Federada',g.RECEM],
-  ]:[
-    ['fc-azul','🔵 Azul (100%+)',g.AZUL],
-    ['fc-verde','🟢 Verde',g.VERDE],
-    ['fc-amarelo','🟡 Amarelo',g.AMARELO],
-    ['fc-vermelho','🔴 Vermelho',g.VERMELHO],
-    ['fc-zerada','⚪ Zerada',g.ZERADA],
+  const el = document.getElementById(id);
+  if (!el) return;
+  const rows = isMain ? [
+    ['fc-azul', '🔵 Azul (100%+)', g.AZUL],
+    ['fc-verde', '🟢 Verde', g.VERDE],
+    ['fc-amarelo', '🟡 Amarelo', g.AMARELO],
+    ['fc-vermelho', '🔴 Vermelho', g.VERMELHO],
+    ['fc-zerada', '⚪ Zerada', g.ZERADA],
+    ['fc-azul', '⭐ Recém Federada', g.RECEM],
+  ] : [
+    ['fc-azul', '🔵 Azul (100%+)', g.AZUL],
+    ['fc-verde', '🟢 Verde', g.VERDE],
+    ['fc-amarelo', '🟡 Amarelo', g.AMARELO],
+    ['fc-vermelho', '🔴 Vermelho', g.VERMELHO],
+    ['fc-zerada', '⚪ Zerada', g.ZERADA],
   ];
-  el.innerHTML=rows.filter(r=>r[2].length>0).map(([cls,lbl,arr])=>`
+  el.innerHTML = rows.filter(r => r[2].length > 0).map(([cls, lbl, arr]) => `
     <div class="farol-card ${cls}">
       <div class="fc-title">${lbl}</div>
       <div class="fc-count">${arr.length}</div>
@@ -1550,11 +2416,12 @@ function buildFarolGrid(id,field='farol'){
 }
 
 // ─── RANK ROWS (ECM-style) ────────────────────────────────────────────────
-function rankRows(arr,valFn,fmtFn,barMaxFn,colorFn){
-  const mx=barMaxFn(arr);
-  return arr.map((d,i)=>{
-    const v=valFn(d),bar=Math.min(nn(v)/nn(mx)*100,100);
-    const col=colorFn?colorFn(d,v):'var(--gold)';
+function rankRows(arr, valFn, fmtFn, barMaxFn, colorFn) {
+  const mx = barMaxFn(arr);
+  return arr.map((d, i) => {
+    const v = valFn(d),
+      bar = Math.min(nn(v) / nn(mx) * 100, 100);
+    const col = colorFn ? colorFn(d, v) : 'var(--gold)';
     return `<div class="rank-row">
       <div class="pos">${i+1}</div>
       <div><div class="rname">${sn(d.nome)}</div><div class="rsub">${d.ramo}</div></div>
@@ -1566,59 +2433,83 @@ function rankRows(arr,valFn,fmtFn,barMaxFn,colorFn){
 }
 
 // ─── HOME ─────────────────────────────────────────────────────────────────
-let charts=[];
-function buildHome(){
-  const base23=DATA.filter(d=>d.categoria!=='RECEM_FEDERADA');
-  const totFat=base23.reduce((s,d)=>s+nn(d.fat),0);
-  const totMeta=base23.reduce((s,d)=>s+nn(d.metaFat),0);
-  const totColab=base23.reduce((s,d)=>s+nn(d.fatColab),0);
-  const verdes=base23.filter(d=>d.farol==='VERDE'||d.farol==='AZUL').length;
-  const zeradas=base23.filter(d=>d.farol==='ZERADA').length;
+let charts = [];
 
-  document.getElementById('kpis-home').innerHTML=[
-    {v:'23 + 1',l:'EJs federadas + Excelência Jr. (recém fed.)',cls:''},
-    {v:brl(totFat),l:'Fat. total (excl. Excelência Jr.)',cls:'accent-gold'},
-    {v:verdes,l:'EJs no verde',cls:'accent-green'},
-    {v:zeradas,l:'EJs zeradas',cls:'accent-red'},
-    {v:brl(totColab),l:'Fat. colaborativo total',cls:'accent-teal'},
-    {v:pctFmt(totFat/totMeta*100),l:'Atingimento geral do ecossistema',cls:'accent-gold'},
-  ].map(k=>`<div class="kpi ${k.cls}"><div class="val">${k.v}</div><div class="lbl">${k.l}</div></div>`).join('');
+function buildHome() {
+  const base23 = DATA.filter(d => d.categoria !== 'RECEM_FEDERADA');
+  const totFat = base23.reduce((s, d) => s + nn(d.fat), 0);
+  const totMeta = base23.reduce((s, d) => s + nn(d.metaFat), 0);
+  const totColab = base23.reduce((s, d) => s + nn(d.fatColab), 0);
+  const verdes = base23.filter(d => d.farol === 'VERDE' || d.farol === 'AZUL').length;
+  const zeradas = base23.filter(d => d.farol === 'ZERADA').length;
 
-  buildFarolGrid('farol-home','farol');
+  document.getElementById('kpis-home').innerHTML = [{
+      v: '23 + 1',
+      l: 'EJs federadas + Excelência Jr. (recém fed.)',
+      cls: ''
+    },
+    {
+      v: brl(totFat),
+      l: 'Fat. total (excl. Excelência Jr.)',
+      cls: 'accent-gold'
+    },
+    {
+      v: verdes,
+      l: 'EJs no verde',
+      cls: 'accent-green'
+    },
+    {
+      v: zeradas,
+      l: 'EJs zeradas',
+      cls: 'accent-red'
+    },
+    {
+      v: brl(totColab),
+      l: 'Fat. colaborativo total',
+      cls: 'accent-teal'
+    },
+    {
+      v: pctFmt(totFat / totMeta * 100),
+      l: 'Atingimento geral do ecossistema',
+      cls: 'accent-gold'
+    },
+  ].map(k => `<div class="kpi ${k.cls}"><div class="val">${k.v}</div><div class="lbl">${k.l}</div></div>`).join('');
+
+  buildFarolGrid('farol-home', 'farol');
 
   // Top5 faturamento bruto
-  const byFat=[...base23].sort((a,b)=>nn(b.fat)-nn(a.fat)).slice(0,5);
-  const mxFat=byFat[0].fat;
-  document.getElementById('top5-fat').innerHTML=rankRows(byFat,d=>d.fat,(d,v)=>brl(v),()=>mxFat,(d,v)=>d.farol==='VERDE'?'var(--green)':d.farol==='AMARELO'?'var(--amber)':'var(--red)');
+  const byFat = [...base23].sort((a, b) => nn(b.fat) - nn(a.fat)).slice(0, 5);
+  const mxFat = byFat[0].fat;
+  document.getElementById('top5-fat').innerHTML = rankRows(byFat, d => d.fat, (d, v) => brl(v), () => mxFat, (d, v) => d.farol === 'VERDE' ? 'var(--green)' : d.farol === 'AMARELO' ? 'var(--amber)' : 'var(--red)');
 
   // Top5 % meta
-  const byPct=[...base23].sort((a,b)=>nn(b.pctFat)-nn(a.pctFat)).slice(0,5);
-  document.getElementById('top5-pct').innerHTML=rankRows(byPct,d=>Math.min(d.pctFat,100),(d,v)=>pctFmt(d.pctFat),()=>100,(d)=>d.pctFat>=80?'var(--green)':d.pctFat>=40?'var(--amber)':'var(--red)');
+  const byPct = [...base23].sort((a, b) => nn(b.pctFat) - nn(a.pctFat)).slice(0, 5);
+  document.getElementById('top5-pct').innerHTML = rankRows(byPct, d => Math.min(d.pctFat, 100), (d, v) => pctFmt(d.pctFat), () => 100, (d) => d.pctFat >= 80 ? 'var(--green)' : d.pctFat >= 40 ? 'var(--amber)' : 'var(--red)');
 
   // Top5 colab
-  const byColab=[...base23].filter(d=>d.fatColab>0).sort((a,b)=>nn(b.fatColab)-nn(a.fatColab)).slice(0,5);
-  if(byColab.length){
-    const mxC=byColab[0].fatColab;
-    document.getElementById('top5-colab').innerHTML=rankRows(byColab,d=>d.fatColab,(d,v)=>brl(v),()=>mxC,()=>'var(--teal)');
+  const byColab = [...base23].filter(d => d.fatColab > 0).sort((a, b) => nn(b.fatColab) - nn(a.fatColab)).slice(0, 5);
+  if (byColab.length) {
+    const mxC = byColab[0].fatColab;
+    document.getElementById('top5-colab').innerHTML = rankRows(byColab, d => d.fatColab, (d, v) => brl(v), () => mxC, () => 'var(--teal)');
   } else {
-    document.getElementById('top5-colab').innerHTML='<div style="font-size:12px;color:var(--text-dim);padding:8px">Sem dados de colaborativo disponíveis.</div>';
+    document.getElementById('top5-colab').innerHTML = '<div style="font-size:12px;color:var(--text-dim);padding:8px">Sem dados de colaborativo disponíveis.</div>';
   }
 
   // Top5 CSAT
-  const byCsat=[...base23].filter(d=>d.csatParcial>0).sort((a,b)=>nn(b.csatParcial)-nn(a.csatParcial)).slice(0,5);
-  document.getElementById('top5-csat').innerHTML=rankRows(byCsat,d=>d.csatParcial,(d,v)=>`${v.toFixed(1)}/5`,()=>5,()=>'var(--gold)');
+  const byCsat = [...base23].filter(d => d.csatParcial > 0).sort((a, b) => nn(b.csatParcial) - nn(a.csatParcial)).slice(0, 5);
+  document.getElementById('top5-csat').innerHTML = rankRows(byCsat, d => d.csatParcial, (d, v) => `${v.toFixed(1)}/5`, () => 5, () => 'var(--gold)');
 
   buildCharts();
 
   // Excelência Jr special card
-  const exc=DATA.find(d=>d.categoria==='RECEM_FEDERADA');
-  if(exc){
-    const existingCard=document.getElementById('exc-card');
-    if(!existingCard){
-      const div=document.createElement('div');
-      div.id='exc-card';
-      div.style.cssText='margin-top:20px';
-      div.innerHTML=`<div style="background:var(--blue-bg);border:2px solid var(--blue);border-radius:13px;padding:20px 22px;display:flex;align-items:center;gap:20px">
+  const exc = DATA.find(d => d.categoria === 'RECEM_FEDERADA');
+  if (exc) {
+    const existingCard = document.getElementById('exc-card');
+    if (!existingCard) {
+      const div = document.createElement('div');
+      div.id = 'exc-card';
+      div.style.cssText = 'margin-top:20px';
+      div.innerHTML = `<div style="background:var(--blue-bg);border:2px solid var(--blue);border-radius:13px;padding:20px 22px;display:flex;align-items:center;gap:20px">
         <div style="font-size:32px">⭐</div>
         <div style="flex:1">
           <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--blue);font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:5px">Recém Federada — Agosto 2026</div>
@@ -1636,59 +2527,110 @@ function buildHome(){
   }
 }
 
-function buildCharts(){
-  charts.forEach(c=>c.destroy());charts=[];
-  const c=cs();
-  Chart.defaults.color=c.dim;
-  Chart.defaults.font.family="'Inter',sans-serif";
-  Chart.defaults.borderColor=c.grid;
-  const legend={position:'bottom',labels:{boxWidth:10,padding:11,font:{size:11},color:c.dim}};
-  const border=c.elev;
+function buildCharts() {
+  charts.forEach(c => c.destroy());
+  charts = [];
+  const c = cs();
+  Chart.defaults.color = c.dim;
+  Chart.defaults.font.family = "'Inter',sans-serif";
+  Chart.defaults.borderColor = c.grid;
+  const legend = {
+    position: 'bottom',
+    labels: {
+      boxWidth: 10,
+      padding: 11,
+      font: {
+        size: 11
+      },
+      color: c.dim
+    }
+  };
+  const border = c.elev;
   // counts now computed inside buildCharts per ejsBase
 
-  const ejsBase=DATA.filter(d=>d.categoria!=='RECEM_FEDERADA');
-  const azu=ejsBase.filter(d=>d.farol==='AZUL').length;
-  const ver=ejsBase.filter(d=>d.farol==='VERDE').length;
-  const ama=ejsBase.filter(d=>d.farol==='AMARELO').length;
-  const ver2=ejsBase.filter(d=>d.farol==='VERMELHO').length;
-  const zer=ejsBase.filter(d=>d.farol==='ZERADA').length;
-  charts.push(new Chart(document.getElementById('chart-farol'),{
-    type:'doughnut',
-    data:{labels:['Azul (100%+)','Verde','Amarelo','Vermelho','Zerada'],datasets:[{data:[azu,ver,ama,ver2,zer],backgroundColor:[c.blue||'#1a6fb5',c.green,c.amber,c.red,c.dim],borderColor:border,borderWidth:2}]},
-    options:{plugins:{legend},cutout:'62%'}
+  const ejsBase = DATA.filter(d => d.categoria !== 'RECEM_FEDERADA');
+  const azu = ejsBase.filter(d => d.farol === 'AZUL').length;
+  const ver = ejsBase.filter(d => d.farol === 'VERDE').length;
+  const ama = ejsBase.filter(d => d.farol === 'AMARELO').length;
+  const ver2 = ejsBase.filter(d => d.farol === 'VERMELHO').length;
+  const zer = ejsBase.filter(d => d.farol === 'ZERADA').length;
+  charts.push(new Chart(document.getElementById('chart-farol'), {
+    type: 'doughnut',
+    data: {
+      labels: ['Azul (100%+)', 'Verde', 'Amarelo', 'Vermelho', 'Zerada'],
+      datasets: [{
+        data: [azu, ver, ama, ver2, zer],
+        backgroundColor: [c.blue || '#1a6fb5', c.green, c.amber, c.red, c.dim],
+        borderColor: border,
+        borderWidth: 2
+      }]
+    },
+    options: {
+      plugins: {
+        legend
+      },
+      cutout: '62%'
+    }
   }));
 
-  const vc=DATA.filter(d=>d.farolColab==='VERDE').length;
-  const vc2=DATA.filter(d=>d.farolColab==='AMARELO').length;
-  const vc3=DATA.filter(d=>d.farolColab==='VERMELHO').length;
-  const vc4=DATA.filter(d=>d.farolColab==='SEM_COLAB').length;
-  charts.push(new Chart(document.getElementById('chart-colab'),{
-    type:'doughnut',
-    data:{labels:['Verde','Amarelo','Vermelho','Sem colab.'],datasets:[{data:[vc,vc2,vc3,vc4],backgroundColor:[c.green,c.amber,c.red,c.dim],borderColor:border,borderWidth:2}]},
-    options:{plugins:{legend},cutout:'62%'}
+  const vc = DATA.filter(d => d.farolColab === 'VERDE').length;
+  const vc2 = DATA.filter(d => d.farolColab === 'AMARELO').length;
+  const vc3 = DATA.filter(d => d.farolColab === 'VERMELHO').length;
+  const vc4 = DATA.filter(d => d.farolColab === 'SEM_COLAB').length;
+  charts.push(new Chart(document.getElementById('chart-colab'), {
+    type: 'doughnut',
+    data: {
+      labels: ['Verde', 'Amarelo', 'Vermelho', 'Sem colab.'],
+      datasets: [{
+        data: [vc, vc2, vc3, vc4],
+        backgroundColor: [c.green, c.amber, c.red, c.dim],
+        borderColor: border,
+        borderWidth: 2
+      }]
+    },
+    options: {
+      plugins: {
+        legend
+      },
+      cutout: '62%'
+    }
   }));
 
-  const sb=DATA.filter(d=>d.situacao==='SOBE').length;
-  const pm=DATA.filter(d=>d.situacao==='PERMANECE').length;
-  const ca=DATA.filter(d=>d.situacao==='CAI').length;
-  charts.push(new Chart(document.getElementById('chart-cluster'),{
-    type:'doughnut',
-    data:{labels:['Subindo','Permanece','Caindo'],datasets:[{data:[sb,pm,ca],backgroundColor:[c.green,c.amber,c.red],borderColor:border,borderWidth:2}]},
-    options:{plugins:{legend},cutout:'62%'}
+  const sb = DATA.filter(d => d.situacao === 'SOBE').length;
+  const pm = DATA.filter(d => d.situacao === 'PERMANECE').length;
+  const ca = DATA.filter(d => d.situacao === 'CAI').length;
+  charts.push(new Chart(document.getElementById('chart-cluster'), {
+    type: 'doughnut',
+    data: {
+      labels: ['Subindo', 'Permanece', 'Caindo'],
+      datasets: [{
+        data: [sb, pm, ca],
+        backgroundColor: [c.green, c.amber, c.red],
+        borderColor: border,
+        borderWidth: 2
+      }]
+    },
+    options: {
+      plugins: {
+        legend
+      },
+      cutout: '62%'
+    }
   }));
 }
 
 // ─── FATURAMENTO ─────────────────────────────────────────────────────────
-let fatFilter='all';
-function buildFatTable(){
-  buildFarolGrid('farol-fat','farol');
-  let data=[...DATA].sort((a,b)=>nn(b.fat)-nn(a.fat));
-  const all=[...data];
-  if(fatFilter!=='all') data=data.filter(d=>d.farol===fatFilter);
-  document.getElementById('fat-tbody').innerHTML=data.map(d=>{
-    const rk=all.indexOf(d)+1;
-    const bar=Math.min(d.pctFat,100);
-    const col=FAROL_COLOR[d.farol];
+let fatFilter = 'all';
+
+function buildFatTable() {
+  buildFarolGrid('farol-fat', 'farol');
+  let data = [...DATA].sort((a, b) => nn(b.fat) - nn(a.fat));
+  const all = [...data];
+  if (fatFilter !== 'all') data = data.filter(d => d.farol === fatFilter);
+  document.getElementById('fat-tbody').innerHTML = data.map(d => {
+    const rk = all.indexOf(d) + 1;
+    const bar = Math.min(d.pctFat, 100);
+    const col = FAROL_COLOR[d.farol];
     return `<tr onclick="openPanel('${d.nome.replace(/'/g,"\\'")}')">
       <td style="font-family:'JetBrains Mono',monospace;color:var(--text-dim);font-size:11px">#${rk}</td>
       <td class="ej-name">${sn(d.nome)}${d.categoria==='RECEM_FEDERADA'?` <span style="font-family:'JetBrains Mono',monospace;font-size:9px;background:var(--blue-bg);color:var(--blue);padding:1px 6px;border-radius:4px;font-weight:700">RECÉM FED.</span>`:''}</td>
@@ -1709,17 +2651,20 @@ function buildFatTable(){
     </tr>`;
   }).join('');
 }
-document.getElementById('fatToggle').addEventListener('click',e=>{
-  const btn=e.target.closest('button');if(!btn)return;
-  document.querySelectorAll('#fatToggle button').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');fatFilter=btn.dataset.f;buildFatTable();
+document.getElementById('fatToggle').addEventListener('click', e => {
+  const btn = e.target.closest('button');
+  if (!btn) return;
+  document.querySelectorAll('#fatToggle button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  fatFilter = btn.dataset.f;
+  buildFatTable();
 });
 
 // ─── COLABORATIVO ─────────────────────────────────────────────────────────
-function buildColab(){
-  buildFarolGrid('farol-colab','farolColab');
-  const sorted=[...DATA].sort((a,b)=>nn(b.fatColab)-nn(a.fatColab));
-  document.getElementById('colab-tbody').innerHTML=sorted.map((d,i)=>`
+function buildColab() {
+  buildFarolGrid('farol-colab', 'farolColab');
+  const sorted = [...DATA].sort((a, b) => nn(b.fatColab) - nn(a.fatColab));
+  document.getElementById('colab-tbody').innerHTML = sorted.map((d, i) => `
     <tr onclick="openPanel('${d.nome.replace(/'/g,"\\'")}')">
       <td style="font-family:'JetBrains Mono',monospace;color:var(--text-dim);font-size:11px">#${i+1}</td>
       <td class="ej-name">${sn(d.nome)}<br><span style="font-size:10px;color:var(--text-dim);font-weight:400">${d.ramo}</span></td>
@@ -1738,17 +2683,17 @@ function buildColab(){
 }
 
 // ─── ENGAJAMENTO ──────────────────────────────────────────────────────────
-function buildEngaj(){
-  const byCsat=[...DATA].filter(d=>d.csatParcial>0).sort((a,b)=>nn(b.csatParcial)-nn(a.csatParcial));
-  const byEngaj=[...DATA].sort((a,b)=>nn(b.pctEngajMEJ)-nn(a.pctEngajMEJ));
-  const byPerm=[...DATA].sort((a,b)=>nn(b.pctPermanencia)-nn(a.pctPermanencia));
+function buildEngaj() {
+  const byCsat = [...DATA].filter(d => d.csatParcial > 0).sort((a, b) => nn(b.csatParcial) - nn(a.csatParcial));
+  const byEngaj = [...DATA].sort((a, b) => nn(b.pctEngajMEJ) - nn(a.pctEngajMEJ));
+  const byPerm = [...DATA].sort((a, b) => nn(b.pctPermanencia) - nn(a.pctPermanencia));
 
-  document.getElementById('rank-csat').innerHTML=rankRows(byCsat.slice(0,6),d=>d.csatParcial,(d,v)=>`${v.toFixed(1)}/5`,()=>5,()=>'var(--gold)');
-  document.getElementById('rank-engaj').innerHTML=rankRows(byEngaj.slice(0,6),d=>d.pctEngajMEJ,(d,v)=>pctFmt(v),()=>100,()=>'var(--teal)');
-  document.getElementById('rank-perm').innerHTML=rankRows(byPerm.slice(0,6),d=>d.pctPermanencia,(d,v)=>pctFmt(v),()=>100,()=>'var(--green)');
+  document.getElementById('rank-csat').innerHTML = rankRows(byCsat.slice(0, 6), d => d.csatParcial, (d, v) => `${v.toFixed(1)}/5`, () => 5, () => 'var(--gold)');
+  document.getElementById('rank-engaj').innerHTML = rankRows(byEngaj.slice(0, 6), d => d.pctEngajMEJ, (d, v) => pctFmt(v), () => 100, () => 'var(--teal)');
+  document.getElementById('rank-perm').innerHTML = rankRows(byPerm.slice(0, 6), d => d.pctPermanencia, (d, v) => pctFmt(v), () => 100, () => 'var(--green)');
 
-  const all=[...DATA].sort((a,b)=>nn(b.csatParcial)-nn(a.csatParcial));
-  document.getElementById('engaj-tbody').innerHTML=all.map((d,i)=>`
+  const all = [...DATA].sort((a, b) => nn(b.csatParcial) - nn(a.csatParcial));
+  document.getElementById('engaj-tbody').innerHTML = all.map((d, i) => `
     <tr onclick="openPanel('${d.nome.replace(/'/g,"\\'")}')">
       <td style="font-family:'JetBrains Mono',monospace;color:var(--text-dim);font-size:11px">#${i+1}</td>
       <td class="ej-name">${sn(d.nome)}<br><span style="font-size:10px;color:var(--text-dim);font-weight:400">${d.ramo}</span></td>
@@ -1770,19 +2715,20 @@ function buildEngaj(){
 }
 
 // ─── CLUSTER ──────────────────────────────────────────────────────────────
-function buildCluster(){
-  const sobe=DATA.filter(d=>d.situacao==='SOBE');
-  const perm=DATA.filter(d=>d.situacao==='PERMANECE');
-  const cai=DATA.filter(d=>d.situacao==='CAI');
-  function clRows(arr,cls){
-    return arr.map(d=>`
+function buildCluster() {
+  const sobe = DATA.filter(d => d.situacao === 'SOBE');
+  const perm = DATA.filter(d => d.situacao === 'PERMANECE');
+  const cai = DATA.filter(d => d.situacao === 'CAI');
+
+  function clRows(arr, cls) {
+    return arr.map(d => `
       <div class="cl-ej-row">
         <div class="cl-ej-name">${sn(d.nome)}</div>
         <span class="pill teal" style="font-size:9px">C${d.cluster}→C${d.clusterAlmejado}</span>
         <span class="pill ${FAROL_PILL[d.farol]}" style="font-size:9px">${FAROL_LBL[d.farol]}</span>
       </div>`).join('');
   }
-  document.getElementById('cl-cards').innerHTML=`
+  document.getElementById('cl-cards').innerHTML = `
     <div class="cl-card cl-sobe">
       <div class="cl-title">📈 Subindo de cluster</div>
       <div class="cl-count">${sobe.length}</div>
@@ -1799,7 +2745,7 @@ function buildCluster(){
       ${clRows(cai)}
     </div>`;
 
-  document.getElementById('cluster-tbody').innerHTML=[...DATA].sort((a,b)=>b.cluster-a.cluster).map(d=>`
+  document.getElementById('cluster-tbody').innerHTML = [...DATA].sort((a, b) => b.cluster - a.cluster).map(d => `
     <tr onclick="openPanel('${d.nome.replace(/'/g,"\\'")}')">
       <td class="ej-name">${sn(d.nome)}<br><span style="font-size:10px;color:var(--text-dim);font-weight:400">${d.ramo}</span></td>
       <td><span class="pill teal">C${d.cluster}</span></td>
@@ -1812,36 +2758,80 @@ function buildCluster(){
 }
 
 // ─── DASH FEDERAÇÃO ───────────────────────────────────────────────────────
-function buildDash(){
-  const base23d=DATA.filter(d=>d.categoria!=='RECEM_FEDERADA');
-  const totFat=base23d.reduce((s,d)=>s+nn(d.fat),0);
-  const totMeta=base23d.reduce((s,d)=>s+nn(d.metaFat),0);
-  const pctGeral=totFat/totMeta*100;
-  const verdes=base23d.filter(d=>d.farol==='VERDE'||d.farol==='AZUL');
-  const zeradas=base23d.filter(d=>d.farol==='ZERADA');
-  const cais=base23d.filter(d=>d.situacao==='CAI');
-  const sobes=base23d.filter(d=>d.situacao==='SOBE');
-  const topFat=[...base23d].sort((a,b)=>b.fat-a.fat)[0];
-  const topPct=[...base23d].sort((a,b)=>b.pctFat-a.pctFat)[0];
-  const topColab=[...base23d].filter(d=>d.fatColab>0).sort((a,b)=>b.fatColab-a.fatColab)[0];
-  const avgEngaj=base23d.reduce((s,d)=>s+nn(d.pctEngajMEJ),0)/base23d.length;
+function buildDash() {
+  const base23d = DATA.filter(d => d.categoria !== 'RECEM_FEDERADA');
+  const totFat = base23d.reduce((s, d) => s + nn(d.fat), 0);
+  const totMeta = base23d.reduce((s, d) => s + nn(d.metaFat), 0);
+  const pctGeral = totFat / totMeta * 100;
+  const verdes = base23d.filter(d => d.farol === 'VERDE' || d.farol === 'AZUL');
+  const zeradas = base23d.filter(d => d.farol === 'ZERADA');
+  const cais = base23d.filter(d => d.situacao === 'CAI');
+  const sobes = base23d.filter(d => d.situacao === 'SOBE');
+  const topFat = [...base23d].sort((a, b) => b.fat - a.fat)[0];
+  const topPct = [...base23d].sort((a, b) => b.pctFat - a.pctFat)[0];
+  const topColab = [...base23d].filter(d => d.fatColab > 0).sort((a, b) => b.fatColab - a.fatColab)[0];
+  const avgEngaj = base23d.reduce((s, d) => s + nn(d.pctEngajMEJ), 0) / base23d.length;
 
-  document.getElementById('dash-kpis').innerHTML=[
-    {v:pctFmt(pctGeral),l:'Atingimento geral do ecossistema',cls:pctGeral>=80?'accent-green':pctGeral>=40?'accent-gold':'accent-red'},
-    {v:verdes.length+'/24',l:'EJs no verde de faturamento',cls:'accent-green'},
-    {v:cais.length,l:'EJs com risco de queda de cluster',cls:'accent-red'},
-    {v:pctFmt(avgEngaj),l:'Engajamento médio com o MEJ',cls:'accent-teal'},
-  ].map(k=>`<div class="kpi ${k.cls}"><div class="val">${k.v}</div><div class="lbl">${k.l}</div></div>`).join('');
+  document.getElementById('dash-kpis').innerHTML = [{
+      v: pctFmt(pctGeral),
+      l: 'Atingimento geral do ecossistema',
+      cls: pctGeral >= 80 ? 'accent-green' : pctGeral >= 40 ? 'accent-gold' : 'accent-red'
+    },
+    {
+      v: verdes.length + '/24',
+      l: 'EJs no verde de faturamento',
+      cls: 'accent-green'
+    },
+    {
+      v: cais.length,
+      l: 'EJs com risco de queda de cluster',
+      cls: 'accent-red'
+    },
+    {
+      v: pctFmt(avgEngaj),
+      l: 'Engajamento médio com o MEJ',
+      cls: 'accent-teal'
+    },
+  ].map(k => `<div class="kpi ${k.cls}"><div class="val">${k.v}</div><div class="lbl">${k.l}</div></div>`).join('');
 
-  const alerts=[
-    {cls:'pos',tag:'Destaque de faturamento',title:`🏆 ${topFat.nome}`,txt:`Maior faturamento bruto do ecossistema com <strong>${brl(topFat.fat)}</strong> — ${pctFmt(topFat.pctFat)} da meta anual. Referência comercial da SERJÚNIOR em 2026.`},
-    {cls:'pos',tag:'Maior % de meta',title:`🌟 ${topPct.nome}`,txt:`Maior atingimento percentual com <strong>${pctFmt(topPct.pctFat)}</strong> da meta. Resultado excepcional que demonstra execução muito acima do esperado.`},
-    {cls:'info',tag:'Colaborativo',title:`🤝 ${topColab?topColab.nome:'Sem dados'}`,txt:topColab?`Lidera o faturamento colaborativo com <strong>${brl(topColab.fatColab)}</strong>. O ecossistema precisa intensificar contratos conjuntos para crescer nesse indicador.`:`Faturamento colaborativo muito baixo no ecossistema. É necessário intensificar a articulação entre EJs.`},
-    {cls:'',tag:'Risco de cluster',title:`📉 ${cais.length} EJs caindo de cluster`,txt:`${cais.map(d=>d.nome).join(', ')} estão com risco de queda. Atenção imediata da conselheira responsável é necessária para reverter o quadro.`},
-    {cls:'',tag:'EJs zeradas',title:`⚪ ${zeradas.length} EJs sem faturamento`,txt:`${zeradas.map(d=>d.nome).join(', ')}. Prioridade máxima de atuação — diagnóstico e plano de desbloqueio de contratos com urgência.`},
-    {cls:'info',tag:'Subindo de cluster',title:`📈 ${sobes.length} EJs subindo de cluster`,txt:`${sobes.map(d=>d.nome).join(', ')} estão no caminho certo. Devem ser celebradas e usadas como referência para o ecossistema.`},
+  const alerts = [{
+      cls: 'pos',
+      tag: 'Destaque de faturamento',
+      title: `🏆 ${topFat.nome}`,
+      txt: `Maior faturamento bruto do ecossistema com <strong>${brl(topFat.fat)}</strong> — ${pctFmt(topFat.pctFat)} da meta anual. Referência comercial da SERJÚNIOR em 2026.`
+    },
+    {
+      cls: 'pos',
+      tag: 'Maior % de meta',
+      title: `🌟 ${topPct.nome}`,
+      txt: `Maior atingimento percentual com <strong>${pctFmt(topPct.pctFat)}</strong> da meta. Resultado excepcional que demonstra execução muito acima do esperado.`
+    },
+    {
+      cls: 'info',
+      tag: 'Colaborativo',
+      title: `🤝 ${topColab?topColab.nome:'Sem dados'}`,
+      txt: topColab ? `Lidera o faturamento colaborativo com <strong>${brl(topColab.fatColab)}</strong>. O ecossistema precisa intensificar contratos conjuntos para crescer nesse indicador.` : `Faturamento colaborativo muito baixo no ecossistema. É necessário intensificar a articulação entre EJs.`
+    },
+    {
+      cls: '',
+      tag: 'Risco de cluster',
+      title: `📉 ${cais.length} EJs caindo de cluster`,
+      txt: `${cais.map(d=>d.nome).join(', ')} estão com risco de queda. Atenção imediata da conselheira responsável é necessária para reverter o quadro.`
+    },
+    {
+      cls: '',
+      tag: 'EJs zeradas',
+      title: `⚪ ${zeradas.length} EJs sem faturamento`,
+      txt: `${zeradas.map(d=>d.nome).join(', ')}. Prioridade máxima de atuação — diagnóstico e plano de desbloqueio de contratos com urgência.`
+    },
+    {
+      cls: 'info',
+      tag: 'Subindo de cluster',
+      title: `📈 ${sobes.length} EJs subindo de cluster`,
+      txt: `${sobes.map(d=>d.nome).join(', ')} estão no caminho certo. Devem ser celebradas e usadas como referência para o ecossistema.`
+    },
   ];
-  document.getElementById('dash-alerts').innerHTML=alerts.map(a=>`
+  document.getElementById('dash-alerts').innerHTML = alerts.map(a => `
     <div class="alert-card ${a.cls}">
       <span class="tag">${a.tag}</span>
       <h3>${a.title}</h3>
@@ -1850,14 +2840,15 @@ function buildDash(){
 }
 
 // ─── GAPS ────────────────────────────────────────────────────────────────
-function buildGaps(){
-  const byFat=[...DATA].filter(d=>d.farol!=='VERDE').sort((a,b)=>a.gapFat-b.gapFat);
-  const byColab=[...DATA].filter(d=>d.metaColab>0&&d.farolColab!=='VERDE').sort((a,b)=>a.gapColab-b.gapColab);
+function buildGaps() {
+  const byFat = [...DATA].filter(d => d.farol !== 'VERDE').sort((a, b) => a.gapFat - b.gapFat);
+  const byColab = [...DATA].filter(d => d.metaColab > 0 && d.farolColab !== 'VERDE').sort((a, b) => a.gapColab - b.gapColab);
 
-  function gapList(arr,field){
-    return arr.slice(0,15).map((d,i)=>{
-      const v=nn(d[field]);const neg=v<=0;
-      const cls=neg?'gap-verde':v<1000?'gap-ama':'gap-red';
+  function gapList(arr, field) {
+    return arr.slice(0, 15).map((d, i) => {
+      const v = nn(d[field]);
+      const neg = v <= 0;
+      const cls = neg ? 'gap-verde' : v < 1000 ? 'gap-ama' : 'gap-red';
       return `<div class="gap-item ${cls}">
         <div class="gpos">${i+1}</div>
         <div><div class="gname">${sn(d.nome)}</div><div class="gsub">${d.ramo}</div></div>
@@ -1867,22 +2858,28 @@ function buildGaps(){
       </div>`;
     }).join('');
   }
-  document.getElementById('gap-fat-list').innerHTML=byFat.length?gapList(byFat,'gapFat'):`<div style="font-size:12px;color:var(--text-dim);padding:8px">🎉 Todas as EJs já estão no verde!</div>`;
-  document.getElementById('gap-colab-list').innerHTML=byColab.length?gapList(byColab,'gapColab'):`<div style="font-size:12px;color:var(--text-dim);padding:8px">🎉 Todas as EJs com meta colab já estão no verde!</div>`;
+  document.getElementById('gap-fat-list').innerHTML = byFat.length ? gapList(byFat, 'gapFat') : `<div style="font-size:12px;color:var(--text-dim);padding:8px">🎉 Todas as EJs já estão no verde!</div>`;
+  document.getElementById('gap-colab-list').innerHTML = byColab.length ? gapList(byColab, 'gapColab') : `<div style="font-size:12px;color:var(--text-dim);padding:8px">🎉 Todas as EJs com meta colab já estão no verde!</div>`;
 }
 
 // ─── ANIVERSÁRIOS ─────────────────────────────────────────────────────────
-function buildAniv(){
-  const now=new Date();
-  const withDates=DATA.map(d=>{
-    let yr=9999;
-    if(d.fedData&&d.fedData!=='------'){const p=d.fedData.split('/');if(p.length===3)yr=parseInt(p[2]);}
-    return{...d,fedYear:yr};
-  }).sort((a,b)=>a.fedYear-b.fedYear);
+function buildAniv() {
+  const now = new Date();
+  const withDates = DATA.map(d => {
+    let yr = 9999;
+    if (d.fedData && d.fedData !== '------') {
+      const p = d.fedData.split('/');
+      if (p.length === 3) yr = parseInt(p[2]);
+    }
+    return {
+      ...d,
+      fedYear: yr
+    };
+  }).sort((a, b) => a.fedYear - b.fedYear);
 
-  document.getElementById('aniv-tbody').innerHTML=withDates.map((d,i)=>{
-    const anos=d.fedYear<9999?`${now.getFullYear()-d.fedYear} anos`:'—';
-    const isNew=d.fedYear>=2024;
+  document.getElementById('aniv-tbody').innerHTML = withDates.map((d, i) => {
+    const anos = d.fedYear < 9999 ? `${now.getFullYear()-d.fedYear} anos` : '—';
+    const isNew = d.fedYear >= 2024;
     return `<tr onclick="openPanel('${d.nome.replace(/'/g,"\\'")}')">
       <td style="font-family:'JetBrains Mono',monospace;color:var(--text-dim);font-size:11px">#${i+1}</td>
       <td class="ej-name">${sn(d.nome)}${isNew?` <span style="font-family:'JetBrains Mono',monospace;font-size:9px;background:var(--amber-bg);color:var(--amber);padding:1px 6px;border-radius:4px;font-weight:700">NOVA</span>`:''}
@@ -1898,17 +2895,18 @@ function buildAniv(){
 }
 
 // ─── PANEL ────────────────────────────────────────────────────────────────
-function openPanel(name){
-  const d=DATA.find(e=>e.nome===name);if(!d)return;
-  document.getElementById('pn-eyebrow').textContent=d.ramo+' · '+d.fedData;
-  document.getElementById('pn-name').textContent=d.nome;
-  document.getElementById('pn-badges').innerHTML=
-    `<span class="pill ${FAROL_PILL[d.farol]}">${FAROL_LBL[d.farol]}</span>`+
-    `<span class="pill ${SIT_PILL[d.situacao]}">${SIT_LBL[d.situacao]}</span>`+
-    `<span class="pill teal">Cluster ${d.cluster}</span>`+
+function openPanel(name) {
+  const d = DATA.find(e => e.nome === name);
+  if (!d) return;
+  document.getElementById('pn-eyebrow').textContent = d.ramo + ' · ' + d.fedData;
+  document.getElementById('pn-name').textContent = d.nome;
+  document.getElementById('pn-badges').innerHTML =
+    `<span class="pill ${FAROL_PILL[d.farol]}">${FAROL_LBL[d.farol]}</span>` +
+    `<span class="pill ${SIT_PILL[d.situacao]}">${SIT_LBL[d.situacao]}</span>` +
+    `<span class="pill teal">Cluster ${d.cluster}</span>` +
     `<span class="pill dim">🎂 ${d.aniv}</span>`;
 
-  document.getElementById('pn-body').innerHTML=`
+  document.getElementById('pn-body').innerHTML = `
     <div class="psec-title">Faturamento</div>
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
       <div class="pstat"><div class="pstat-lbl">Fat. Bruto</div><div class="pstat-val" style="color:var(--gold)">${brl(d.fat)}</div></div>
@@ -1953,83 +2951,160 @@ function openPanel(name){
 }
 
 // ─── THEME TOGGLE ─────────────────────────────────────────────────────────
-document.getElementById('themeToggle').addEventListener('click',e=>{
-  const btn=e.target.closest('button');if(!btn)return;
-  const theme=btn.dataset.theme;
-  document.documentElement.dataset.theme=theme;
-  document.querySelectorAll('#themeToggle button').forEach(b=>b.classList.toggle('active',b===btn));
+document.getElementById('themeToggle').addEventListener('click', e => {
+  const btn = e.target.closest('button');
+  if (!btn) return;
+  const theme = btn.dataset.theme;
+  document.documentElement.dataset.theme = theme;
+  document.querySelectorAll('#themeToggle button').forEach(b => b.classList.toggle('active', b === btn));
   buildCharts();
 });
 
 // ─── UPLOAD ───────────────────────────────────────────────────────────────
-function handleDrop(e){e.preventDefault();document.getElementById('upload-zone').classList.remove('drag');const f=e.dataTransfer.files[0];if(f)handleFile(f);}
-function showStatus(type,msg){
-  const el=document.getElementById('upload-status');
-  if(!msg){el.style.display='none';return;}
-  const bg={error:'var(--red-bg)',success:'var(--green-bg)',loading:'var(--amber-bg)'}[type]||'var(--bg-elev-2)';
-  const tx={error:'var(--red)',success:'var(--green)',loading:'var(--amber)'}[type]||'var(--text)';
-  el.style.cssText=`display:block;padding:10px 14px;border-radius:8px;font-size:12px;background:${bg};color:${tx};line-height:1.55;margin-bottom:14px;font-family:'JetBrains Mono',monospace`;
-  el.textContent=msg;
+function handleDrop(e) {
+  e.preventDefault();
+  document.getElementById('upload-zone').classList.remove('drag');
+  const f = e.dataTransfer.files[0];
+  if (f) handleFile(f);
 }
-function parseBRL(s){if(!s)return null;const n=parseFloat(String(s).replace(/R\$\s*/g,'').replace(/\./g,'').replace(',','.').replace(/[^0-9.\-]/g,''));return isNaN(n)?null:n;}
-function handleFile(file){
-  if(!file)return;
-  const ext=file.name.split('.').pop().toLowerCase();
-  if(!['csv','xlsx'].includes(ext)){showStatus('error','⚠️ Selecione um arquivo .csv ou .xlsx exportado da plataforma Brasil Júnior.');return;}
-  if(ext==='xlsx'){showStatus('loading','✅ XLSX detectado. Exporte como CSV da aba "BJ Relatório de EJs 2026" e faça upload novamente.');return;}
-  showStatus('loading','⏳ Lendo '+file.name+'...');
-  const reader=new FileReader();
-  reader.onload=ev=>parseCSV(ev.target.result,file.name);
-  reader.onerror=()=>showStatus('error','❌ Erro ao ler o arquivo.');
-  reader.readAsText(file,'UTF-8');
+
+function showStatus(type, msg) {
+  const el = document.getElementById('upload-status');
+  if (!msg) {
+    el.style.display = 'none';
+    return;
+  }
+  const bg = {
+    error: 'var(--red-bg)',
+    success: 'var(--green-bg)',
+    loading: 'var(--amber-bg)'
+  } [type] || 'var(--bg-elev-2)';
+  const tx = {
+    error: 'var(--red)',
+    success: 'var(--green)',
+    loading: 'var(--amber)'
+  } [type] || 'var(--text)';
+  el.style.cssText = `display:block;padding:10px 14px;border-radius:8px;font-size:12px;background:${bg};color:${tx};line-height:1.55;margin-bottom:14px;font-family:'JetBrains Mono',monospace`;
+  el.textContent = msg;
 }
-function parseCSV(text,fname){
-  const lines=text.split('\n').map(l=>l.trim()).filter(l=>l);
-  if(lines.length<2){showStatus('error','❌ CSV inválido ou vazio.');return;}
-  let hi=0;
-  for(let i=0;i<Math.min(10,lines.length);i++){if(lines[i].toUpperCase().includes('EMPRESA')){hi=i;break;}}
-  const headers=lines[hi].split(',').map(h=>h.replace(/"/g,'').trim().toUpperCase());
-  const c={
-    ej:headers.findIndex(h=>h.includes('EMPRESA')),
-    fat:headers.findIndex(h=>h==='FATURAMENTO'),
-    meta:headers.findIndex(h=>h==='META_DE_REVENUE'),
-    fatColab:headers.findIndex(h=>h.includes('COLABORATIVO_2026')&&h.includes('FAT')),
-    metaColab:headers.findIndex(h=>h.includes('META_DE_FATURAMENTO_COLABORATIVO')),
-    engaj:headers.findIndex(h=>h.includes('ENGAJADOS_COM_MEJ')&&h.includes('PORCEN')),
-    perm:headers.findIndex(h=>h.includes('PERMANENCIA')),
-    csat:headers.findIndex(h=>h==='CSAT_PARCIAL'),
-    membros:headers.findIndex(h=>h==='MEMBROS'),
+
+function parseBRL(s) {
+  if (!s) return null;
+  const n = parseFloat(String(s).replace(/R\$\s*/g, '').replace(/\./g, '').replace(',', '.').replace(/[^0-9.\-]/g, ''));
+  return isNaN(n) ? null : n;
+}
+
+function handleFile(file) {
+  if (!file) return;
+  const ext = file.name.split('.').pop().toLowerCase();
+  if (!['csv', 'xlsx'].includes(ext)) {
+    showStatus('error', '⚠️ Selecione um arquivo .csv ou .xlsx exportado da plataforma Brasil Júnior.');
+    return;
+  }
+  if (ext === 'xlsx') {
+    showStatus('loading', '✅ XLSX detectado. Exporte como CSV da aba "BJ Relatório de EJs 2026" e faça upload novamente.');
+    return;
+  }
+  showStatus('loading', '⏳ Lendo ' + file.name + '...');
+  const reader = new FileReader();
+  reader.onload = ev => parseCSV(ev.target.result, file.name);
+  reader.onerror = () => showStatus('error', '❌ Erro ao ler o arquivo.');
+  reader.readAsText(file, 'UTF-8');
+}
+
+function parseCSV(text, fname) {
+  const lines = text.split('\n').map(l => l.trim()).filter(l => l);
+  if (lines.length < 2) {
+    showStatus('error', '❌ CSV inválido ou vazio.');
+    return;
+  }
+  let hi = 0;
+  for (let i = 0; i < Math.min(10, lines.length); i++) {
+    if (lines[i].toUpperCase().includes('EMPRESA')) {
+      hi = i;
+      break;
+    }
+  }
+  const headers = lines[hi].split(',').map(h => h.replace(/"/g, '').trim().toUpperCase());
+  const c = {
+    ej: headers.findIndex(h => h.includes('EMPRESA')),
+    fat: headers.findIndex(h => h === 'FATURAMENTO'),
+    meta: headers.findIndex(h => h === 'META_DE_REVENUE'),
+    fatColab: headers.findIndex(h => h.includes('COLABORATIVO_2026') && h.includes('FAT')),
+    metaColab: headers.findIndex(h => h.includes('META_DE_FATURAMENTO_COLABORATIVO')),
+    engaj: headers.findIndex(h => h.includes('ENGAJADOS_COM_MEJ') && h.includes('PORCEN')),
+    perm: headers.findIndex(h => h.includes('PERMANENCIA')),
+    csat: headers.findIndex(h => h === 'CSAT_PARCIAL'),
+    membros: headers.findIndex(h => h === 'MEMBROS'),
   };
-  if(c.ej===-1){showStatus('error','❌ Coluna EMPRESA_JUNIOR não encontrada.');return;}
-  let updated=0,notFound=[];
-  for(let i=hi+1;i<lines.length;i++){
-    const cols=lines[i].split(',').map(col=>col.replace(/"/g,'').trim());
-    if(!cols[c.ej])continue;
-    const name=cols[c.ej].trim();
-    const d=DATA.find(e=>e.nome.toUpperCase()===name.toUpperCase()||name.toUpperCase().includes(e.nome.split(' ')[0].toUpperCase()));
-    if(!d){notFound.push(name);continue;}
-    if(c.fat!==-1&&cols[c.fat]){const v=parseBRL(cols[c.fat]);if(v!==null)d.fat=v;}
-    if(c.meta!==-1&&cols[c.meta]){const v=parseBRL(cols[c.meta]);if(v!==null)d.metaFat=v;}
-    if(c.fatColab!==-1&&cols[c.fatColab]){const v=parseBRL(cols[c.fatColab]);if(v!==null)d.fatColab=v;}
-    if(c.metaColab!==-1&&cols[c.metaColab]){const v=parseBRL(cols[c.metaColab]);if(v!==null)d.metaColab=v;}
-    if(c.engaj!==-1&&cols[c.engaj]){const v=parseFloat(cols[c.engaj]);if(!isNaN(v))d.pctEngajMEJ=v;}
-    if(c.perm!==-1&&cols[c.perm]){const v=parseFloat(cols[c.perm]);if(!isNaN(v))d.pctPermanencia=v;}
-    if(c.csat!==-1&&cols[c.csat]){const v=parseFloat(cols[c.csat]);if(!isNaN(v))d.csatParcial=v;}
-    if(c.membros!==-1&&cols[c.membros]){const v=parseInt(cols[c.membros]);if(!isNaN(v))d.membros=v;}
-    d.pctFat=d.metaFat>0?(d.fat/d.metaFat)*100:0;
-    d.farol=d.fat===0?'ZERADA':d.pctFat>=80?'VERDE':d.pctFat>=40?'AMARELO':'VERMELHO';
-    d.pctColab=d.metaColab>0?(d.fatColab/d.metaColab)*100:0;
-    d.farolColab=d.metaColab===0||d.fatColab===0?'SEM_COLAB':d.pctColab>=80?'VERDE':d.pctColab>=40?'AMARELO':'VERMELHO';
+  if (c.ej === -1) {
+    showStatus('error', '❌ Coluna EMPRESA_JUNIOR não encontrada.');
+    return;
+  }
+  let updated = 0,
+    notFound = [];
+  for (let i = hi + 1; i < lines.length; i++) {
+    const cols = lines[i].split(',').map(col => col.replace(/"/g, '').trim());
+    if (!cols[c.ej]) continue;
+    const name = cols[c.ej].trim();
+    const d = DATA.find(e => e.nome.toUpperCase() === name.toUpperCase() || name.toUpperCase().includes(e.nome.split(' ')[0].toUpperCase()));
+    if (!d) {
+      notFound.push(name);
+      continue;
+    }
+    if (c.fat !== -1 && cols[c.fat]) {
+      const v = parseBRL(cols[c.fat]);
+      if (v !== null) d.fat = v;
+    }
+    if (c.meta !== -1 && cols[c.meta]) {
+      const v = parseBRL(cols[c.meta]);
+      if (v !== null) d.metaFat = v;
+    }
+    if (c.fatColab !== -1 && cols[c.fatColab]) {
+      const v = parseBRL(cols[c.fatColab]);
+      if (v !== null) d.fatColab = v;
+    }
+    if (c.metaColab !== -1 && cols[c.metaColab]) {
+      const v = parseBRL(cols[c.metaColab]);
+      if (v !== null) d.metaColab = v;
+    }
+    if (c.engaj !== -1 && cols[c.engaj]) {
+      const v = parseFloat(cols[c.engaj]);
+      if (!isNaN(v)) d.pctEngajMEJ = v;
+    }
+    if (c.perm !== -1 && cols[c.perm]) {
+      const v = parseFloat(cols[c.perm]);
+      if (!isNaN(v)) d.pctPermanencia = v;
+    }
+    if (c.csat !== -1 && cols[c.csat]) {
+      const v = parseFloat(cols[c.csat]);
+      if (!isNaN(v)) d.csatParcial = v;
+    }
+    if (c.membros !== -1 && cols[c.membros]) {
+      const v = parseInt(cols[c.membros]);
+      if (!isNaN(v)) d.membros = v;
+    }
+    d.pctFat = d.metaFat > 0 ? (d.fat / d.metaFat) * 100 : 0;
+    d.farol = d.fat === 0 ? 'ZERADA' : d.pctFat >= 80 ? 'VERDE' : d.pctFat >= 40 ? 'AMARELO' : 'VERMELHO';
+    d.pctColab = d.metaColab > 0 ? (d.fatColab / d.metaColab) * 100 : 0;
+    d.farolColab = d.metaColab === 0 || d.fatColab === 0 ? 'SEM_COLAB' : d.pctColab >= 80 ? 'VERDE' : d.pctColab >= 40 ? 'AMARELO' : 'VERMELHO';
     updated++;
   }
-  buildHome();buildFatTable();buildColab();buildEngaj();buildCluster();buildDash();buildGaps();buildAniv();
-  const now=new Date();
-  const log=document.getElementById('upd-log');
-  const row=document.createElement('div');
-  row.style.cssText='display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--line);font-family:\'JetBrains Mono\',monospace;font-size:11px';
-  row.innerHTML=`<span>${now.toLocaleDateString('pt-BR',{month:'long',year:'numeric'})}</span><span style="color:var(--teal);font-weight:700">✓ ${updated} EJs atualizadas de ${fname}</span>`;
-  log.insertBefore(row,log.firstChild);
-  showStatus('success',`🎉 ${updated} EJs atualizadas!${notFound.length?' Não encontradas: '+notFound.join(', '):''}`);
+  buildHome();
+  buildFatTable();
+  buildColab();
+  buildEngaj();
+  buildCluster();
+  buildDash();
+  buildGaps();
+  buildAniv();
+  const now = new Date();
+  const log = document.getElementById('upd-log');
+  const row = document.createElement('div');
+  row.style.cssText = 'display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--line);font-family:\'JetBrains Mono\',monospace;font-size:11px';
+  row.innerHTML = `<span>${now.toLocaleDateString('pt-BR',{month:'long',year:'numeric'})}</span><span style="color:var(--teal);font-weight:700">✓ ${updated} EJs atualizadas de ${fname}</span>`;
+  log.insertBefore(row, log.firstChild);
+  showStatus('success', `🎉 ${updated} EJs atualizadas!${notFound.length?' Não encontradas: '+notFound.join(', '):''}`);
 }
 
 // ─── INIT ─────────────────────────────────────────────────────────────────
