@@ -2290,6 +2290,28 @@ const DATA=[
 "farolColab": "SEM_COLAB", 
 "membros": 16}];
 
+// ─── FAROL DINÂMICO POR MÊS ─────────────────────────────────────────────
+// Ajuste este número todo início de mês (1 a 12).
+// Critério: meta proporcional = 100 * MES_ATUAL / 12.
+// Ex.: agosto (mês 8) → meta proporcional = 66,67% da meta anual.
+const MES_ATUAL = 8; // Agosto
+
+function calcFarol(fat, pctFat) {
+  if (fat === 0) return 'ZERADA';
+  const metaProporcional = 100 * MES_ATUAL / 12; // ex: agosto = 66.67
+  const margem = 1; // pontos percentuais de tolerância pro amarelo
+  if (pctFat >= 100) return 'AZUL';
+  if (pctFat > metaProporcional + margem) return 'VERDE';
+  if (pctFat >= metaProporcional - margem) return 'AMARELO';
+  return 'VERMELHO';
+}
+
+// Recalcula o farol de todas as EJs a partir da meta proporcional do mês
+// (substitui o valor digitado manualmente no campo "farol" de cada objeto)
+DATA.forEach(d => {
+  d.farol = calcFarol(d.fat, d.pctFat);
+});
+
 // ─── HELPERS ──────────────────────────────────────────────────────────────
 const nn = v => typeof v === 'number' && !isNaN(v) ? v : 0;
 const brl = v => v >= 1000000 ? 'R$' + (v / 1000000).toFixed(1) + 'M' : v >= 1000 ? 'R$' + Math.round(v / 1000) + 'k' : `R$${v.toFixed(0)}`;
@@ -3104,7 +3126,7 @@ function parseCSV(text, fname) {
       if (!isNaN(v)) d.membros = v;
     }
     d.pctFat = d.metaFat > 0 ? (d.fat / d.metaFat) * 100 : 0;
-    d.farol = d.fat === 0 ? 'ZERADA' : d.pctFat >= 80 ? 'VERDE' : d.pctFat >= 40 ? 'AMARELO' : 'VERMELHO';
+    d.farol = calcFarol(d.fat, d.pctFat);
     d.pctColab = d.metaColab > 0 ? (d.fatColab / d.metaColab) * 100 : 0;
     d.farolColab = d.metaColab === 0 || d.fatColab === 0 ? 'SEM_COLAB' : d.pctColab >= 80 ? 'VERDE' : d.pctColab >= 40 ? 'AMARELO' : 'VERMELHO';
     updated++;
