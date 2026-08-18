@@ -101,6 +101,12 @@ body{
   display:flex;
   flex-direction:column;
   overflow:hidden;
+  transition:transform .28s ease;
+}
+
+/* Estado recolhido: desliza a sidebar inteira para fora da tela à esquerda */
+.sidebar.collapsed{
+  transform:translateX(-236px);
 }
 
 /* Área rolável dentro da sidebar (para caber muitos itens de menu) */
@@ -210,6 +216,12 @@ body{
   margin-left:236px;
   flex:1;
   min-height:100vh;
+  transition:margin-left .28s ease;
+}
+
+/* Quando a sidebar está recolhida, o conteúdo principal ocupa a tela toda */
+.main.expanded{
+  margin-left:0;
 }
 
 /* Barra superior fixa com título da página e alternância de tema */
@@ -324,7 +336,7 @@ html[data-theme="dark"] .theme-toggle button.active{
 
 /* Espaçamento interno da área de conteúdo (abaixo da topbar) */
 /* Espaçamento interno da área de conteúdo (abaixo da topbar); largura
-   máxima de 1920px para não esticar demais em monitores ultra-wide */
+   máxima de 1200px para caber na tela sem rolagem horizontal */
 .content{
   padding:24px 28px;
   max-width:1200px;
@@ -1313,7 +1325,7 @@ footer{
 
 /* Faixa sticky que gruda logo abaixo da topbar ao rolar a página */
 /* Faixa sticky que gruda logo abaixo da topbar ao rolar a página;
-   largura máxima de 1920px e centralizada, para acompanhar o
+   largura máxima de 1200px e centralizada, para acompanhar o
    mesmo limite aplicado ao restante do conteúdo */
 .ticker-wrap{
   position: sticky;
@@ -1420,9 +1432,14 @@ footer{
 <!-- ── MAIN ── -->
 <main class="main">
 <div class="topbar" style="position:relative">
-  <div class="tb-left">
-    <div class="eyebrow">SERJÚNIOR - DASH DA REDE</div>
-    <h1 id="view-title">Visão Geral</h1>
+  <div style="display:flex;align-items:center">
+    <button id="sidebarToggle" onclick="toggleSidebar()" title="Mostrar/ocultar menu" style="display:flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:var(--bg-elev-2);color:var(--text-dim);cursor:pointer;margin-right:14px;flex-shrink:0">
+      <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M2 4h12M2 8h12M2 12h12"/></svg>
+    </button>
+    <div class="tb-left">
+      <div class="eyebrow">SERJÚNIOR - DASH DA REDE</div>
+      <h1 id="view-title">Visão Geral</h1>
+    </div>
   </div>
   <div class="tb-right">
     <div class="theme-toggle" id="themeToggle">
@@ -1492,9 +1509,9 @@ footer{
   <div class="section">
     <div class="section-head"><h2><span class="num">02</span>Composição do Ecossistema</h2></div>
     <div class="grid-3">
-      <div class="card"><div style="font-size:12px;color:var(--text-dim);margin-bottom:10px">Farol de Faturamento</div><canvas id="chart-farol" height="200"></canvas></div>
-      <div class="card"><div style="font-size:12px;color:var(--text-dim);margin-bottom:10px">Farol Colaborativo</div><canvas id="chart-colab" height="200"></canvas></div>
-      <div class="card"><div style="font-size:12px;color:var(--text-dim);margin-bottom:10px">Movimento de Cluster</div><canvas id="chart-cluster" height="200"></canvas></div>
+      <div class="card"><div style="font-size:12px;color:var(--text-dim);margin-bottom:10px">Farol de Faturamento</div><div style="position:relative;width:100%;height:200px"><canvas id="chart-farol"></canvas></div></div>
+      <div class="card"><div style="font-size:12px;color:var(--text-dim);margin-bottom:10px">Farol Colaborativo</div><div style="position:relative;width:100%;height:200px"><canvas id="chart-colab"></canvas></div></div>
+      <div class="card"><div style="font-size:12px;color:var(--text-dim);margin-bottom:10px">Movimento de Cluster</div><div style="position:relative;width:100%;height:200px"><canvas id="chart-cluster"></canvas></div></div>
     </div>
   </div>
   <div class="section">
@@ -2388,6 +2405,12 @@ const VIEW_TITLES = {
   upload: 'Atualizar Dados'
 };
 
+// ─── SIDEBAR TOGGLE (deslizante) ───────────────────────────────────────────
+function toggleSidebar() {
+  document.querySelector('.sidebar').classList.toggle('collapsed');
+  document.querySelector('.main').classList.toggle('expanded');
+}
+
 // ─── VIEW SWITCH ─────────────────────────────────────────────────────────
 function sv(id, el) {
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
@@ -2607,6 +2630,7 @@ function buildCharts() {
       }]
     },
     options: {
+      maintainAspectRatio: false,
       plugins: {
         legend
       },
@@ -2630,6 +2654,7 @@ function buildCharts() {
       }]
     },
     options: {
+      maintainAspectRatio: false,
       plugins: {
         legend
       },
@@ -2652,6 +2677,7 @@ function buildCharts() {
       }]
     },
     options: {
+      maintainAspectRatio: false,
       plugins: {
         legend
       },
