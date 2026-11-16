@@ -1408,6 +1408,7 @@ footer{
     <div class="nav-item active" onclick="sv('home',this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="1" width="6" height="6" rx="1.5"/><rect x="9" y="1" width="6" height="6" rx="1.5"/><rect x="1" y="9" width="6" height="6" rx="1.5"/><rect x="9" y="9" width="6" height="6" rx="1.5"/></svg>Visão Geral</div>
     <div class="nav-item" onclick="sv('fat',this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="1,12 5,6 8,9 11,4 15,7"/><path d="M11 4h4v4"/></svg>Faturamento</div>
     <div class="nav-item" onclick="sv('colab',this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="5" cy="5" r="3"/><circle cx="11" cy="11" r="3"/><path d="M7.5 7.5l1 1"/></svg>Colaborativo</div>
+    <div class="nav-item" onclick="sv('colabpct',this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="5" cy="5" r="3"/><circle cx="11" cy="11" r="3"/><path d="M7.5 7.5l1 1"/></svg>Colab. % do Faturamento</div>
     <div class="nav-item" onclick="sv('engaj',this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8" cy="5" r="3"/><path d="M2 14c0-3 2.7-5 6-5s6 2 6 5"/></svg>Engajamento & CSAT</div>
     <div class="nav-item" onclick="sv('cluster',this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="1" y="9" width="6" height="6" rx="1"/><path d="M9 12h6M12 9v6"/></svg>Farol de Cluster</div>
     <div class="nav-item" onclick="sv('dash',this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8" cy="8" r="7"/><path d="M8 4v4l3 2"/></svg>Leitura da Federação</div>
@@ -1577,6 +1578,20 @@ footer{
         <th>% Meta Colab.</th><th>Farol Colab.</th>
       </tr></thead>
       <tbody id="colab-tbody"></tbody>
+    </table></div></div>
+  </div>
+</div>
+
+<!-- ══ COLABORATIVO % DO FATURAMENTO ══ -->
+<div class="view" id="view-colabpct">
+  <div class="section">
+    <div class="section-head"><h2><span class="num">01</span>Colaborativo — % do Faturamento</h2></div>
+    <div class="card" id="colabpct-resumo" style="margin-bottom:14px"></div>
+    <div class="card"><div class="table-scroll"><table>
+      <thead><tr>
+        <th>#</th><th>EJ</th><th>Fat. Total</th><th>Fat. Colab. Bruto</th><th>% do Fat. Total</th>
+      </tr></thead>
+      <tbody id="colabpct-tbody"></tbody>
     </table></div></div>
   </div>
 </div>
@@ -1823,7 +1838,7 @@ const DATA=[
 "categoria": "NORMAL", 
 "csatParcial": 0.0, 
 "pctCsat": 60.0, 
-"pctEngajMEJ": 92.3, 
+"pctEngajMEJ": 100.0, 
 "pctPermanencia": 50.0, 
 "fatColab": 1590.05, 
 "metaColab": 881.4, 
@@ -1848,7 +1863,7 @@ const DATA=[
 "categoria": "NORMAL", 
 "csatParcial": 4.5, 
 "pctCsat": 66.67, 
-"pctEngajMEJ": 83.3, 
+"pctEngajMEJ": 88.9, 
 "pctPermanencia": 36.36, 
 "fatColab": 0.0, 
 "metaColab": 500.0, 
@@ -1948,7 +1963,7 @@ const DATA=[
 "categoria": "NORMAL", 
 "csatParcial": 5.0, 
 "pctCsat": 100.0, 
-"pctEngajMEJ": 93.8, 
+"pctEngajMEJ": 100.0, 
 "pctPermanencia": 35.29, 
 "fatColab": 1200.0, 
 "metaColab": 500.0, 
@@ -2023,7 +2038,7 @@ const DATA=[
 "categoria": "NORMAL", 
 "csatParcial": 0.0, 
 "pctCsat": 75.0, 
-"pctEngajMEJ": 55.0, 
+"pctEngajMEJ": 60.0, 
 "pctPermanencia": 23.08, 
 "fatColab": 258.0, 
 "metaColab": 500.0, 
@@ -2073,7 +2088,7 @@ const DATA=[
 "categoria": "NORMAL", 
 "csatParcial": 4.91, 
 "pctCsat": 78.57, 
-"pctEngajMEJ": 77.3, 
+"pctEngajMEJ": 81.8, 
 "pctPermanencia": 58.33, 
 "fatColab": 5300.0, 
 "metaColab": 500.0, 
@@ -2123,7 +2138,7 @@ const DATA=[
 "categoria": "NORMAL", 
 "csatParcial": 0.0, 
 "pctCsat": 75.0, 
-"pctEngajMEJ": 60.0, 
+"pctEngajMEJ": 66.7, 
 "pctPermanencia": 25.81, 
 "fatColab": 0.0, 
 "metaColab": 500.0, 
@@ -2173,7 +2188,7 @@ const DATA=[
 "categoria": "NORMAL", 
 "csatParcial": 0.0, 
 "pctCsat": 71.43, 
-"pctEngajMEJ": 79.5, 
+"pctEngajMEJ": 89.7, 
 "pctPermanencia": 57.5, 
 "fatColab": 0.0, 
 "metaColab": 780.0, 
@@ -2198,7 +2213,7 @@ const DATA=[
 "categoria": "NORMAL", 
 "csatParcial": 0.0, 
 "pctCsat": 50.0, 
-"pctEngajMEJ": 61.1, 
+"pctEngajMEJ": 83.3, 
 "pctPermanencia": 53.33, 
 "fatColab": 0.0, 
 "metaColab": 1375.0, 
@@ -2248,14 +2263,14 @@ const DATA=[
 "categoria": "NORMAL", 
 "csatParcial": 5.0, 
 "pctCsat": 90.91, 
-"pctEngajMEJ": 34.3, 
-"pctPermanencia": 91.89, 
+"pctEngajMEJ": 38.9, 
+"pctPermanencia": 89.47, 
 "fatColab": 0.0, 
 "metaColab": 500.0, 
 "pctColab": 0.0, 
 "gapColab": 500.0, 
 "farolColab": "SEM_COLAB", 
-"membros": 35}, 
+"membros": 36}, 
  
 <!-- DASH ZOOPEC -->
 {"nome": "ZOOPEC", 
@@ -2273,7 +2288,7 @@ const DATA=[
 "categoria": "NORMAL", 
 "csatParcial": 0.0, 
 "pctCsat": 0.0, 
-"pctEngajMEJ": 50.0, 
+"pctEngajMEJ": 53.3, 
 "pctPermanencia": 42.11, 
 "fatColab": 0.0, 
 "metaColab": 500.0, 
@@ -2298,7 +2313,7 @@ const DATA=[
 "categoria": "NORMAL", 
 "csatParcial": 5.0, 
 "pctCsat": 100.0, 
-"pctEngajMEJ": 62.5, 
+"pctEngajMEJ": 87.5, 
 "pctPermanencia": 31.25, 
 "fatColab": 0.0, 
 "metaColab": 0.0, 
@@ -2398,6 +2413,7 @@ const VIEW_TITLES = {
   home: 'Visão Geral',
   fat: 'Ranking de Faturamento',
   colab: 'Faturamento Colaborativo',
+  colabpct: 'Colaborativo — % do Faturamento',
   engaj: 'Engajamento, CSAT & Permanência',
   cluster: 'Farol de Cluster',
   dash: 'Leitura da Federação — Dezembro 2026',
@@ -2716,6 +2732,37 @@ function buildColab() {
         </div>`:'—'}
       </td>
       <td><span class="pill ${FAROL_PILL[d.farolColab]}">${FAROL_LBL[d.farolColab]}</span></td>
+    </tr>`).join('');
+}
+
+// ─── COLABORATIVO (% DO FATURAMENTO) ──────────────────────────────────
+function buildColabPct() {
+  const pctColabFat = d => nn(d.fat) > 0 ? nn(d.fatColab) / nn(d.fat) * 100 : 0;
+  const totFat = DATA.reduce((s, d) => s + nn(d.fat), 0);
+  const totColab = DATA.reduce((s, d) => s + nn(d.fatColab), 0);
+  const comColab = DATA.filter(d => nn(d.fatColab) > 0).length;
+  document.getElementById('colabpct-resumo').innerHTML = `
+    <div style="display:flex;gap:28px;flex-wrap:wrap;align-items:baseline">
+      <div><div style="font-size:12px;color:var(--text-dim)">Colaborativo na rede</div><div style="font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:700;color:var(--teal)">${pctFmt(totFat > 0 ? totColab / totFat * 100 : 0)}</div></div>
+      <div><div style="font-size:12px;color:var(--text-dim)">Fat. colaborativo / Fat. total</div><div style="font-size:14px;font-weight:600">${brl(totColab)} / ${brl(totFat)}</div></div>
+      <div><div style="font-size:12px;color:var(--text-dim)">EJs com colaborativo</div><div style="font-size:14px;font-weight:600">${comColab} de ${DATA.length}</div></div>
+    </div>`;
+  const sorted = [...DATA].sort((a, b) => pctColabFat(b) - pctColabFat(a) || nn(b.fatColab) - nn(a.fatColab));
+  const mx = Math.max(...sorted.map(pctColabFat), 1);
+  document.getElementById('colabpct-tbody').innerHTML = sorted.map((d, i) => `
+    <tr onclick="openPanel('${d.nome.replace(/'/g,"\\'")}')">
+      <td style="font-family:'JetBrains Mono',monospace;color:var(--text-dim);font-size:11px">#${i+1}</td>
+      <td class="ej-name">${sn(d.nome)}<br><span style="font-size:10px;color:var(--text-dim);font-weight:400">${d.ramo}</span></td>
+      <td style="color:var(--text-dim)">${d.fat>0?brl(d.fat):'—'}</td>
+      <td style="color:var(--teal);font-weight:700">${d.fatColab>0?brl(d.fatColab):'—'}</td>
+      <td>
+        <div style="display:flex;align-items:center;gap:7px">
+          <div style="width:80px;height:5px;background:var(--bg-elev-2);border-radius:5px;overflow:hidden">
+            <div style="width:${pctColabFat(d)/mx*100}%;height:100%;background:var(--teal);border-radius:5px"></div>
+          </div>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:600">${d.fatColab>0?pctFmt(pctColabFat(d)):'—'}</span>
+        </div>
+      </td>
     </tr>`).join('');
 }
 
@@ -3130,6 +3177,7 @@ function parseCSV(text, fname) {
   buildHome();
   buildFatTable();
   buildColab();
+  buildColabPct();
   buildEngaj();
   buildCluster();
   buildDash();
@@ -3148,6 +3196,7 @@ function parseCSV(text, fname) {
 buildHome();
 buildFatTable();
 buildColab();
+buildColabPct();
 buildEngaj();
 buildCluster();
 buildDash();
