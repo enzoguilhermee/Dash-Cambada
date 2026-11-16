@@ -1408,7 +1408,7 @@ footer{
     <div class="nav-item active" onclick="sv('home',this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="1" width="6" height="6" rx="1.5"/><rect x="9" y="1" width="6" height="6" rx="1.5"/><rect x="1" y="9" width="6" height="6" rx="1.5"/><rect x="9" y="9" width="6" height="6" rx="1.5"/></svg>Visão Geral</div>
     <div class="nav-item" onclick="sv('fat',this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="1,12 5,6 8,9 11,4 15,7"/><path d="M11 4h4v4"/></svg>Faturamento</div>
     <div class="nav-item" onclick="sv('colab',this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="5" cy="5" r="3"/><circle cx="11" cy="11" r="3"/><path d="M7.5 7.5l1 1"/></svg>Colaborativo</div>
-    <div class="nav-item" onclick="sv('colabpct',this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="5" cy="5" r="3"/><circle cx="11" cy="11" r="3"/><path d="M7.5 7.5l1 1"/></svg>Colab. % do Faturamento</div>
+    <div class="nav-item" onclick="sv('colabpct',this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="5" cy="5" r="3"/><circle cx="11" cy="11" r="3"/><path d="M7.5 7.5l1 1"/></svg>Colab. % da Meta</div>
     <div class="nav-item" onclick="sv('engaj',this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8" cy="5" r="3"/><path d="M2 14c0-3 2.7-5 6-5s6 2 6 5"/></svg>Engajamento & CSAT</div>
     <div class="nav-item" onclick="sv('cluster',this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="1" y="9" width="6" height="6" rx="1"/><path d="M9 12h6M12 9v6"/></svg>Farol de Cluster</div>
     <div class="nav-item" onclick="sv('dash',this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8" cy="8" r="7"/><path d="M8 4v4l3 2"/></svg>Leitura da Federação</div>
@@ -1533,6 +1533,12 @@ footer{
         <div id="top5-colab"></div>
       </div>
       <div class="card">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--gold);letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px">🤝 Top 5 — % da Meta Colaborativa</div>
+        <div id="top5-colabpct"></div>
+      </div>
+    </div>
+    <div class="grid-2" style="margin-top:14px;grid-template-columns:1fr">
+      <div class="card">
         <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--gold);letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px">⭐ Top 5 — CSAT Parcial</div>
         <div id="top5-csat"></div>
       </div>
@@ -1582,14 +1588,14 @@ footer{
   </div>
 </div>
 
-<!-- ══ COLABORATIVO % DO FATURAMENTO ══ -->
+<!-- ══ COLABORATIVO % DA META ══ -->
 <div class="view" id="view-colabpct">
   <div class="section">
-    <div class="section-head"><h2><span class="num">01</span>Colaborativo — % do Faturamento</h2></div>
+    <div class="section-head"><h2><span class="num">01</span>Colaborativo — % da Meta Individual</h2></div>
     <div class="card" id="colabpct-resumo" style="margin-bottom:14px"></div>
     <div class="card"><div class="table-scroll"><table>
       <thead><tr>
-        <th>#</th><th>EJ</th><th>Fat. Total</th><th>Fat. Colab. Bruto</th><th>% do Fat. Total</th>
+        <th>#</th><th>EJ</th><th>% da Meta Colab.</th><th>Fat. Colab. Bruto</th><th>Meta Colab.</th><th>GAP p/ Meta</th><th>Farol Colab.</th>
       </tr></thead>
       <tbody id="colabpct-tbody"></tbody>
     </table></div></div>
@@ -2413,7 +2419,7 @@ const VIEW_TITLES = {
   home: 'Visão Geral',
   fat: 'Ranking de Faturamento',
   colab: 'Faturamento Colaborativo',
-  colabpct: 'Colaborativo — % do Faturamento',
+  colabpct: 'Colaborativo — % da Meta',
   engaj: 'Engajamento, CSAT & Permanência',
   cluster: 'Farol de Cluster',
   dash: 'Leitura da Federação — Dezembro 2026',
@@ -2517,6 +2523,9 @@ function buildHome() {
   const totColab = base23.reduce((s, d) => s + nn(d.fatColab), 0);
   const verdes = base23.filter(d => d.farol === 'VERDE' || d.farol === 'AZUL').length;
   const zeradas = base23.filter(d => d.farol === 'ZERADA').length;
+  const colabComMeta = base23.filter(d => nn(d.metaColab) > 0);
+  const somaMetaColab = colabComMeta.reduce((s, d) => s + nn(d.metaColab), 0);
+  const somaFatColabMeta = colabComMeta.reduce((s, d) => s + nn(d.fatColab), 0);
 
   document.getElementById('kpis-home').innerHTML = [{
       v: '24',
@@ -2541,6 +2550,11 @@ function buildHome() {
     {
       v: brl(totColab),
       l: 'Fat. colaborativo total',
+      cls: 'accent-teal'
+    },
+    {
+      v: pctFmt(somaMetaColab > 0 ? somaFatColabMeta / somaMetaColab * 100 : 0),
+      l: '% da meta colaborativa',
       cls: 'accent-teal'
     },
     {
@@ -2569,6 +2583,12 @@ function buildHome() {
   } else {
     document.getElementById('top5-colab').innerHTML = '<div style="font-size:12px;color:var(--text-dim);padding:8px">Sem dados de colaborativo disponíveis.</div>';
   }
+
+  // Top5 % meta colab
+  const byColabPct = [...base23].filter(d => nn(d.metaColab) > 0 && nn(d.fatColab) > 0).sort((a, b) => nn(b.pctColab) - nn(a.pctColab)).slice(0, 5);
+  document.getElementById('top5-colabpct').innerHTML = byColabPct.length
+    ? rankRows(byColabPct, d => Math.min(d.pctColab, 100), (d, v) => pctFmt(d.pctColab), () => 100, d => FAROL_COLOR[d.farolColab] || 'var(--teal)')
+    : '<div style="font-size:12px;color:var(--text-dim);padding:8px">Sem dados de colaborativo dispon\u00edveis.</div>';
 
   // Top5 CSAT
   const byCsat = [...base23].filter(d => d.csatParcial > 0).sort((a, b) => nn(b.csatParcial) - nn(a.csatParcial)).slice(0, 5);
@@ -2735,34 +2755,35 @@ function buildColab() {
     </tr>`).join('');
 }
 
-// ─── COLABORATIVO (% DO FATURAMENTO) ──────────────────────────────────
+// ─── COLABORATIVO (% DA META INDIVIDUAL) ──────────────────────────────
 function buildColabPct() {
-  const pctColabFat = d => nn(d.fat) > 0 ? nn(d.fatColab) / nn(d.fat) * 100 : 0;
-  const totFat = DATA.reduce((s, d) => s + nn(d.fat), 0);
-  const totColab = DATA.reduce((s, d) => s + nn(d.fatColab), 0);
-  const comColab = DATA.filter(d => nn(d.fatColab) > 0).length;
+  const comMeta = DATA.filter(d => nn(d.metaColab) > 0);
+  const somaColab = comMeta.reduce((s, d) => s + nn(d.fatColab), 0);
+  const somaMeta = comMeta.reduce((s, d) => s + nn(d.metaColab), 0);
+  const bateram = comMeta.filter(d => nn(d.gapColab) <= 0).length;
   document.getElementById('colabpct-resumo').innerHTML = `
     <div style="display:flex;gap:28px;flex-wrap:wrap;align-items:baseline">
-      <div><div style="font-size:12px;color:var(--text-dim)">Colaborativo na rede</div><div style="font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:700;color:var(--teal)">${pctFmt(totFat > 0 ? totColab / totFat * 100 : 0)}</div></div>
-      <div><div style="font-size:12px;color:var(--text-dim)">Fat. colaborativo / Fat. total</div><div style="font-size:14px;font-weight:600">${brl(totColab)} / ${brl(totFat)}</div></div>
-      <div><div style="font-size:12px;color:var(--text-dim)">EJs com colaborativo</div><div style="font-size:14px;font-weight:600">${comColab} de ${DATA.length}</div></div>
+      <div><div style="font-size:12px;color:var(--text-dim)">% da meta colaborativa (rede)</div><div style="font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:700;color:var(--teal)">${pctFmt(somaMeta > 0 ? somaColab / somaMeta * 100 : 0)}</div></div>
+      <div><div style="font-size:12px;color:var(--text-dim)">Fat. colaborativo / Soma das metas individuais</div><div style="font-size:14px;font-weight:600">${brl(somaColab)} / ${brl(somaMeta)}</div></div>
+      <div><div style="font-size:12px;color:var(--text-dim)">EJs que bateram a meta colab.</div><div style="font-size:14px;font-weight:600">${bateram} de ${comMeta.length}</div></div>
     </div>`;
-  const sorted = [...DATA].sort((a, b) => pctColabFat(b) - pctColabFat(a) || nn(b.fatColab) - nn(a.fatColab));
-  const mx = Math.max(...sorted.map(pctColabFat), 1);
+  const sorted = [...DATA].sort((a, b) => nn(b.pctColab) - nn(a.pctColab) || nn(b.fatColab) - nn(a.fatColab));
   document.getElementById('colabpct-tbody').innerHTML = sorted.map((d, i) => `
     <tr onclick="openPanel('${d.nome.replace(/'/g,"\\'")}')">
       <td style="font-family:'JetBrains Mono',monospace;color:var(--text-dim);font-size:11px">#${i+1}</td>
       <td class="ej-name">${sn(d.nome)}<br><span style="font-size:10px;color:var(--text-dim);font-weight:400">${d.ramo}</span></td>
-      <td style="color:var(--text-dim)">${d.fat>0?brl(d.fat):'—'}</td>
-      <td style="color:var(--teal);font-weight:700">${d.fatColab>0?brl(d.fatColab):'—'}</td>
       <td>
-        <div style="display:flex;align-items:center;gap:7px">
+        ${d.metaColab>0?`<div style="display:flex;align-items:center;gap:7px">
           <div style="width:80px;height:5px;background:var(--bg-elev-2);border-radius:5px;overflow:hidden">
-            <div style="width:${pctColabFat(d)/mx*100}%;height:100%;background:var(--teal);border-radius:5px"></div>
+            <div style="width:${Math.min(d.pctColab,100)}%;height:100%;background:${FAROL_COLOR[d.farolColab]};border-radius:5px"></div>
           </div>
-          <span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:600">${d.fatColab>0?pctFmt(pctColabFat(d)):'—'}</span>
-        </div>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:600">${pctFmt(d.pctColab)}</span>
+        </div>`:'—'}
       </td>
+      <td style="color:var(--teal);font-weight:700">${d.fatColab>0?brl(d.fatColab):'—'}</td>
+      <td style="color:var(--text-dim)">${d.metaColab>0?brl(d.metaColab):'—'}</td>
+      <td style="color:var(--text-dim)">${d.metaColab===0?'—':d.gapColab<=0?'✅ Meta atingida':brl(d.gapColab)}</td>
+      <td><span class="pill ${FAROL_PILL[d.farolColab]}">${FAROL_LBL[d.farolColab]}</span></td>
     </tr>`).join('');
 }
 
